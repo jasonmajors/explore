@@ -1,7 +1,8 @@
-import { createStackNavigator } from "react-navigation";
+import { createStackNavigator, createSwitchNavigator } from "react-navigation";
 import { HomeScreen } from '../components/HomeScreen';
 import { DetailsScreen } from "../components/DetailsScreen";
 import { ModalScreen } from "../components/ModalScreen";
+import LoginScreen from "../screens/LoginScreen";
 
 const MainStack = createStackNavigator(
   {
@@ -26,7 +27,19 @@ const MainStack = createStackNavigator(
   }
 )
 
-export const AppNavigator = createStackNavigator(
+const AuthStack = createStackNavigator(
+  {
+    Login: {
+      screen: LoginScreen
+    }
+  },
+  {
+    headerMode: 'none',
+  }
+)
+
+// TODO: Need to setup defaulting to auth stack if not logged in
+export const AppNavigator = createSwitchNavigator(
   {
     Main: {
       screen: MainStack,
@@ -34,10 +47,12 @@ export const AppNavigator = createStackNavigator(
     MyModal: {
       screen: ModalScreen,
     },
+    Auth: {
+      screen: AuthStack
+    }
   },
   {
-    mode: 'modal',
-    headerMode: 'none',
+    initialRouteName: 'Auth',
   }
 )
 
