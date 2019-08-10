@@ -31,6 +31,15 @@ class LoginScreen extends React.Component {
               <Text style={ styles.titleText }>Explore</Text>
             </View>
             <View style={{ flex: 1, alignItems: 'center'}}>
+              { !login && (
+                <Input
+                  inputStyle={styles.textInput}
+                  placeholderTextColor="white"
+                  containerStyle={{ marginBottom: 10 }}
+                  inputContainerStyle={{ borderBottomWidth: 0 }}
+                  placeholder='Name'
+                />
+              )}
               <Input
                 inputStyle={styles.textInput}
                 placeholderTextColor="white"
@@ -54,7 +63,7 @@ class LoginScreen extends React.Component {
                   <View style={{ flex: 1 }}>
                     <Text style={ styles.onboardingText }>
                       <Text>Need an account?</Text>
-                      <Text style={{ color: 'blue' }}> Sign Up</Text>
+                      <Text style={ styles.onboardingTextLink }> Sign Up</Text>
                     </Text>
                   </View>
                 </TouchableHighlight>
@@ -64,7 +73,7 @@ class LoginScreen extends React.Component {
                   <View style={{ flex: 1 }}>
                     <Text style={ styles.onboardingText }>
                       <Text>Already have an account?</Text>
-                      <Text style={{ color: 'blue' }}> Login</Text>
+                      <Text style={ styles.onboardingTextLink }> Login</Text>
                     </Text>
                   </View>
                 </TouchableHighlight>
@@ -113,6 +122,10 @@ const styles = StyleSheet.create({
     fontSize: 17,
     marginTop: 10,
     color: 'white'
+  },
+  onboardingTextLink: {
+    fontWeight: 'bold',
+    color: 'blue'
   },
   baseText: {
     // fontFamily: 'Cochin',
