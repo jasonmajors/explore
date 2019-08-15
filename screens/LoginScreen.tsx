@@ -1,7 +1,7 @@
 import React from "react";
-import { View, Text, StyleSheet, ImageBackground, SafeAreaView, StatusBar, TouchableHighlight } from "react-native";
+import { View, Text, StyleSheet, ImageBackground, SafeAreaView, TouchableHighlight } from "react-native";
 import { createStackNavigator, createAppContainer } from "react-navigation";
-import { Input, Button } from 'react-native-elements';
+import { Input, Button, SocialIcon } from 'react-native-elements';
 
 
 class LoginScreen extends React.Component {
@@ -30,7 +30,7 @@ class LoginScreen extends React.Component {
               <Text style={ styles.baseText }>Long Beach</Text>
               <Text style={ styles.titleText }>Explore</Text>
             </View>
-            <View style={{ flex: 1, alignItems: 'center'}}>
+            <View style={{ flex: 1.75, alignItems: 'center' }}>
               { !login && (
                 <Input
                   inputStyle={styles.textInput}
@@ -79,7 +79,31 @@ class LoginScreen extends React.Component {
                 </TouchableHighlight>
               )}
             </View>
-            <View style={{ flex: 1 }} />
+            <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'flex-end', marginBottom: 15 }}>
+              <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                <Text style={{ color: 'white' }}>Or With</Text>
+              </View>
+              <View style={{ flex: 0.5, flexDirection: 'row', justifyContent: 'space-around' }}>
+                <SocialIcon
+                  type='facebook'
+                  style={{ backgroundColor: 'transparent' }}
+                  raised={false}
+                  iconSize={35}
+                />
+                <SocialIcon
+                  type='twitter'
+                  style={{ backgroundColor: 'transparent' }}
+                  raised={false}
+                  iconSize={35}
+                />
+                <SocialIcon
+                  type='instagram'
+                  style={{ backgroundColor: 'transparent' }}
+                  raised={false}
+                  iconSize={35}
+                />
+              </View>
+            </View>
           </View>
         </ImageBackground>
       </SafeAreaView>
