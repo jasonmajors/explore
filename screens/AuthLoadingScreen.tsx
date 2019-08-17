@@ -7,12 +7,12 @@ import {
     StyleSheet,
   } from 'react-native';
 
-import firebase from '../utils/firebase';
+import { firebase, listenForAuth } from '../utils/firebase';
 
 export class AuthLoadingScreen extends React.Component<any, any> {
   constructor(props) {
     super(props)
-    firebase.listenForAuth(props)
+    listenForAuth(firebase, props)
   }
   // Render any loading content that you like here
   render() {

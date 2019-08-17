@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, ImageBackground, SafeAreaView, TouchableHighlight } from "react-native";
 import { Input, Button, SocialIcon } from 'react-native-elements';
-import firebase from '../utils/firebase';
+import { firebase, listenForAuth } from '../utils/firebase';
 
 export class LoginScreen extends React.Component<any, any> {
   constructor(props) {
@@ -23,7 +23,7 @@ export class LoginScreen extends React.Component<any, any> {
     if (this.state.email && this.state.password) {
       const { email, password } = this.state;
       firebase.auth().createUserWithEmailAndPassword(email, password)
-        .then(firebase.listenForAuth(this.props))
+        .then(listenForAuth(firebase, this.props))
         .catch(error => {
           // Handle Errors here.
           var errorCode = error.code;
@@ -39,7 +39,7 @@ export class LoginScreen extends React.Component<any, any> {
     if (this.state.email && this.state.password) {
       const { email, password } = this.state;
       firebase.auth().signInWithEmailAndPassword(email, password)
-        .then(firebase.listenForAuth(this.props))
+        .then(listenForAuth(firebase, this.props))
         .catch(function(error) {
           console.log(error)
           // Handle Errors here.

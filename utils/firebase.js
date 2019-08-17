@@ -2,8 +2,8 @@ import * as firebase from 'firebase'  // Should not be used elsewhere in the pro
 
 firebase.initializeApp(Expo.Constants.manifest.extra.firebase);
 
-firebase.listenForAuth = (props) => {
-  firebase.auth().onAuthStateChanged((user) => {
+function listenForAuth(firebase, props) {
+  firebase.auth().onAuthStateChanged(user => {
     if (user != null) {
       // Send user to main stack
       props.navigation.navigate('App')
@@ -13,4 +13,7 @@ firebase.listenForAuth = (props) => {
   });
 }
 
-export default firebase;
+module.exports = {
+  firebase,
+  listenForAuth
+}
