@@ -2,9 +2,10 @@ import { createStackNavigator, createSwitchNavigator } from "react-navigation";
 import { HomeScreen } from '../components/HomeScreen';
 import { DetailsScreen } from "../components/DetailsScreen";
 import { ModalScreen } from "../components/ModalScreen";
-import LoginScreen from "../screens/LoginScreen";
+import { LoginScreen } from "../screens/LoginScreen";
+import  { AuthLoadingScreen } from "../screens/AuthLoadingScreen";
 
-const MainStack = createStackNavigator(
+const AppStack = createStackNavigator(
   {
     Home: {
       screen: HomeScreen,
@@ -38,38 +39,22 @@ const AuthStack = createStackNavigator(
   }
 )
 
-// TODO: Need to setup defaulting to auth stack if not logged in
 export const AppNavigator = createSwitchNavigator(
   {
-    Main: {
-      screen: MainStack,
+    AuthLoading: {
+      screen: AuthLoadingScreen,
+    },
+    App: {
+      screen: AppStack,
+    },
+    Auth: {
+      screen: AuthStack
     },
     MyModal: {
       screen: ModalScreen,
     },
-    Auth: {
-      screen: AuthStack
-    }
   },
   {
-    initialRouteName: 'Auth',
+    initialRouteName: 'AuthLoading',
   }
 )
-
-// export const AppNavigator = createStackNavigator({
-//   Home: {
-//     screen: HomeScreen
-//   },
-//   Details: DetailsScreen,
-// },{
-//   initialRouteName: 'Home',
-//   defaultNavigationOptions: {
-//     headerStyle: {
-//       backgroundColor: '#f4511e',
-//     },
-//     headerTintColor: '#fff',
-//     headerTitleStyle: {
-//       fontWeight: 'bold',
-//     },
-//   },
-// });

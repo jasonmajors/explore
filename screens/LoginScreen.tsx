@@ -1,19 +1,38 @@
 import React from "react";
 import { View, Text, StyleSheet, ImageBackground, SafeAreaView, TouchableHighlight } from "react-native";
-import { createStackNavigator, createAppContainer } from "react-navigation";
 import { Input, Button, SocialIcon } from 'react-native-elements';
+import firebase from '../utils/firebase';
 
+export class LoginScreen extends React.Component<any, any> {
+  constructor(props) {
+    super(props);
 
-class LoginScreen extends React.Component {
+    this.state = {
+      login: true,
+      name: null,
+      email: null,
+      password: null,
+    }
+  }
+
   static navigationOptions = {
     header: null,
   }
 
-  state = {
-    login: true,
-    name: null,
-    email: null,
-    password: null,
+  register() {
+    if (this.state.email && this.state.password) {
+      const { email, password } = this.state;
+      firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then(() => {
+          this.props.navigation.navigate('App')
+        })
+        .catch(error => {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // ...
+      });
+    }
   }
 
   render() {
@@ -38,6 +57,7 @@ class LoginScreen extends React.Component {
                   containerStyle={{ marginBottom: 10 }}
                   inputContainerStyle={{ borderBottomWidth: 0 }}
                   placeholder='Name'
+                  onChangeText={ e => this.setState({ name: e }) }
                 />
               )}
               <Input
@@ -45,6 +65,7 @@ class LoginScreen extends React.Component {
                 placeholderTextColor="white"
                 inputContainerStyle={{ borderBottomWidth: 0 }}
                 placeholder='Email'
+                onChangeText={ email => this.setState({ email }) }
               />
               <Input
                 inputStyle={styles.textInput}
@@ -52,11 +73,15 @@ class LoginScreen extends React.Component {
                 containerStyle={{ marginTop: 10 }}
                 inputContainerStyle={{ borderBottomWidth: 0 }}
                 placeholder='Password'
+                secureTextEntry={true}
+                onChangeText={ password => this.setState({ password }) }
               />
               <Button
                 containerStyle={ styles.loginButtonContainer }
                 buttonStyle={ styles.loginButton }
                 title={ btnText }
+                // TODO: Need to grab from inputs obvi
+                onPress={ () => this.register() }
                 />
               { login && (
                 <TouchableHighlight onPress={ () => this.setState({ login: false }) }>
@@ -97,7 +122,7 @@ class LoginScreen extends React.Component {
                   iconSize={35}
                 />
                 <SocialIcon
-                  type='instagram'
+                  type='google'
                   style={{ backgroundColor: 'transparent' }}
                   raised={false}
                   iconSize={35}
@@ -164,11 +189,3 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
-
-const AppNavigator = createStackNavigator({
-  Home: {
-    screen: LoginScreen
-  }
-});
-
-export default createAppContainer(AppNavigator);

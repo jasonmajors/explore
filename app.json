@@ -31,6 +31,14 @@
           "fetch"
         ]
       }
+    },
+    "extra": {
+      "firebase": {
+        "apiKey": "AIzaSyDgsCnweBFYTXE-6u76TXsJfVhwTOTpGHw",
+        "authDomain": "explore-6d63a.firebaseapp.com",
+        "databaseURL": "https://explore-6d63a.firebaseio.com",
+        "projectId": "explore-6d63a"
+      }
     }
   }
 }
