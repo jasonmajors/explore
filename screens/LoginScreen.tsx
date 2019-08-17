@@ -23,15 +23,32 @@ export class LoginScreen extends React.Component<any, any> {
     if (this.state.email && this.state.password) {
       const { email, password } = this.state;
       firebase.auth().createUserWithEmailAndPassword(email, password)
-        .then(() => {
-          this.props.navigation.navigate('App')
-        })
+        .then(firebase.listenForAuth(this.props))
         .catch(error => {
           // Handle Errors here.
           var errorCode = error.code;
           var errorMessage = error.message;
           // ...
       });
+    } else {
+      // error - required fields
+    }
+  }
+
+  login() {
+    if (this.state.email && this.state.password) {
+      const { email, password } = this.state;
+      firebase.auth().signInWithEmailAndPassword(email, password)
+        .then(firebase.listenForAuth(this.props))
+        .catch(function(error) {
+          console.log(error)
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // ...
+      });
+    } else {
+      // error - required fields
     }
   }
 
@@ -80,8 +97,7 @@ export class LoginScreen extends React.Component<any, any> {
                 containerStyle={ styles.loginButtonContainer }
                 buttonStyle={ styles.loginButton }
                 title={ btnText }
-                // TODO: Need to grab from inputs obvi
-                onPress={ () => this.register() }
+                onPress={ login ? () => this.login() : () => this.register() }
                 />
               { login && (
                 <TouchableHighlight onPress={ () => this.setState({ login: false }) }>
