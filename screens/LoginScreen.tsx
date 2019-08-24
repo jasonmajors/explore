@@ -12,6 +12,7 @@ export class LoginScreen extends React.Component<any, any> {
       name: null,
       email: null,
       password: null,
+      error: null,
     }
   }
 
@@ -26,9 +27,7 @@ export class LoginScreen extends React.Component<any, any> {
         .then(listenForAuth(firebase, this.props))
         .catch(error => {
           // Handle Errors here.
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          // ...
+          this.setError(error.message)
       });
     } else {
       // error - required fields
@@ -40,20 +39,22 @@ export class LoginScreen extends React.Component<any, any> {
       const { email, password } = this.state;
       firebase.auth().signInWithEmailAndPassword(email, password)
         .then(listenForAuth(firebase, this.props))
-        .catch(function(error) {
+        .catch(error => {
           console.log(error)
           // Handle Errors here.
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          // ...
+          this.setError(error.message)
       });
     } else {
       // error - required fields
     }
   }
 
+  setError(errorMessage) {
+    this.setState({ error: errorMessage })
+  }
+
   render() {
-    const { login } = this.state
+    const { login, error } = this.state
     const btnText = login ? "Login" : "Sign Up"
 
     return (
@@ -67,6 +68,9 @@ export class LoginScreen extends React.Component<any, any> {
               <Text style={ styles.titleText }>Explore</Text>
             </View>
             <View style={{ flex: 1.75, alignItems: 'center' }}>
+              { error && (
+                <Text style={{ color: '#ff9999' }}>{ error }</Text>
+              )}
               { !login && (
                 <Input
                   inputStyle={styles.textInput}

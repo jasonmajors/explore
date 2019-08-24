@@ -3,12 +3,13 @@ import { HomeScreen } from '../components/HomeScreen';
 import { DetailsScreen } from "../components/DetailsScreen";
 import { ModalScreen } from "../components/ModalScreen";
 import { LoginScreen } from "../screens/LoginScreen";
+import { ListingScreen } from "../screens/ListingScreen";
 import  { AuthLoadingScreen } from "../screens/AuthLoadingScreen";
 
 const AppStack = createStackNavigator(
   {
     Home: {
-      screen: HomeScreen,
+      screen: ListingScreen,
     },
     Details: {
       screen: DetailsScreen,
@@ -18,7 +19,8 @@ const AppStack = createStackNavigator(
     initialRouteName: "Home",
     defaultNavigationOptions: {
       headerStyle: {
-        backgroundColor: '#f4511e',
+        backgroundColor: '#323232', // TODO: Need some opacity
+        height: 60 // TODO: store in constants somewhere
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
