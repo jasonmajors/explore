@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, ScrollView, Dimensions, Button, ImageBackground } from "react-native";
+import { View, Text, ScrollView, Dimensions, Button } from "react-native";
 import { HuntListing } from "../components/HuntListing";
 
 export class ListingScreen extends React.Component<any, any> {
@@ -13,33 +13,31 @@ export class ListingScreen extends React.Component<any, any> {
       />
     ),
   }
-  // TODO: We will need this for when we have the nav bar due to react navigation
-  // static navigationOptions = {
-  //   headerStyle: { marginTop: Constants.statusBarHeight },
-  // }
+
+  goToNext() : void {
+    const { height } = Dimensions.get('window')
+
+    this.refs.scrollView.scrollTo({ x: 0, y: height, animated: true })
+  }
 
   render() {
-    const { height } = Dimensions.get('window');
-
     return (
       <ScrollView
+        ref='scrollView'
         pagingEnabled
       >
-        <View style={{ backgroundColor: 'blue', height: height - 60 }}>
-          <HuntListing
-            title="Naples"
-            description="Hello it's naples omg so pretty"
-            image="https://s3.amazonaws.com/zumpermedia/blog/wp-content/uploads/2018/12/06142608/iStock-1002431174.jpg"
-          />
-        </View>
-        <View style={{ backgroundColor: 'green', height: height - 60 }}>
-          <ImageBackground
-            source={{ uri: 'https://lbpost.com/hi-lo/wp-content/uploads/2019/02/Bixby-Knolls-.jpg' }}
-            style={{ width: '100%', height: '100%' }}
-            >
-            <Text>Bar</Text>
-          </ImageBackground>
-        </View>
+        <HuntListing
+          title="Naples"
+          description="Hello it's naples omg so pretty. Enjoy a nice stroll around Naples and find some dope shit. It'll be so fun!"
+          image="https://s3.amazonaws.com/zumpermedia/blog/wp-content/uploads/2018/12/06142608/iStock-1002431174.jpg"
+          nextHunt={() => this.goToNext()}
+        />
+        <HuntListing
+          title="Bixby Knolls"
+          description="Hello it's bixby omg so pretty. Enjoy a nice stroll around Bix and find some dope shit. It'll be so fun!"
+          image="https://lbpost.com/hi-lo/wp-content/uploads/2019/02/Bixby-Knolls-.jpg"
+          nextHunt={() => this.goToNext()} // TODO: Wont pass in a pagination prop if it's the last item in the array
+        />
       </ScrollView>
     );
   }

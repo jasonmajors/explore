@@ -1,40 +1,69 @@
 import React from "react";
-import { Text, ImageBackground, View, StyleSheet } from "react-native";
+import { Text, ImageBackground, View, StyleSheet, Dimensions } from "react-native";
 import { Button } from 'react-native-elements';
+import Strings from '../utils/strings';
 
 export class HuntListing extends React.Component<any, any> {
     render() {
-      const { image, title, description } = this.props
+      const { image, title, description, nextHunt } = this.props
+      const { height } = Dimensions.get('window')
+
       return (
-        <ImageBackground
-          source={{ uri: image }}
-          style={{width: '100%', height: '100%'}}
-        >
-          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text style={{ fontSize: 60, color: 'white' }}>{ title }</Text>
-            <Text style={{ fontSize: 20, color: 'white' }}>{ description }</Text>
-            <Button
-              containerStyle={ styles.buttonContainer }
-              buttonStyle={ styles.button }
-              title="Get Started"
-            />
-          </View>
-        </ImageBackground>
+        <View style={{ backgroundColor: 'blue', height: height - 60 }}>
+          <ImageBackground
+            source={{ uri: image }}
+            style={ styles.imageStyle }
+          >
+          </ImageBackground>
+          <View style={ styles.overlay } />
+          <View style={ styles.content }>
+              <Text style={{ fontSize: 60, color: 'white' }}>{ title }</Text>
+              <Text style={{ fontSize: 17, color: 'white' }}>{ description }</Text>
+              <Button
+                containerStyle={ styles.buttonContainer }
+                buttonStyle={ styles.button }
+                title={ Strings.huntIndexCTA }
+              />
+              <Button
+                containerStyle={ styles.buttonContainer }
+                buttonStyle={ styles.button }
+                title="test"
+                onPress={ this.props.nextHunt }
+              />
+            </View>
+        </View>
       )
     }
 }
 
 
 const styles = StyleSheet.create({
+  content: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: 20,
+    marginRight: 20,
+    ...StyleSheet.absoluteFillObject
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0,0,0,0.3)'
+  },
+  imageStyle: {
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+  },
   buttonContainer: {
     height: 50,
-    marginTop: 10,
-    width: '80%'
+    marginTop: 40,
+    width: '50%'
   },
   button: {
     backgroundColor: 'blue',
     borderRadius: 8,
-
     height: 50,
     marginLeft: 10,
     marginRight: 10
