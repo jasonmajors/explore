@@ -2,6 +2,7 @@ import React from "react";
 import { Text, ImageBackground, View, StyleSheet, Dimensions } from "react-native";
 import { Button } from 'react-native-elements';
 import Strings from '../utils/strings';
+import { Ionicons } from '@expo/vector-icons';
 
 export class HuntListing extends React.Component<any, any> {
     render() {
@@ -16,20 +17,24 @@ export class HuntListing extends React.Component<any, any> {
           >
           </ImageBackground>
           <View style={ styles.overlay } />
-          <View style={ styles.content }>
+            <View style={ styles.content }>
               <Text style={{ fontSize: 60, color: 'white' }}>{ title }</Text>
               <Text style={{ fontSize: 17, color: 'white' }}>{ description }</Text>
               <Button
                 containerStyle={ styles.buttonContainer }
                 buttonStyle={ styles.button }
                 title={ Strings.huntIndexCTA }
+                onPress={ () => alert('CTA!') }
               />
-              <Button
-                containerStyle={ styles.buttonContainer }
-                buttonStyle={ styles.button }
-                title="test"
-                onPress={ this.props.nextHunt }
-              />
+              <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end', ...StyleSheet.absoluteFillObject }} >
+                <Ionicons
+                  style={{ marginBottom: 40 }}
+                  name="md-arrow-dropdown-circle"
+                  size={55}
+                  color="white"
+                  onPress={ nextHunt }
+                />
+              </View>
             </View>
         </View>
       )
