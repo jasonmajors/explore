@@ -1,4 +1,4 @@
 export default {
-  huntIndexCTA: 'See Details',
-  
+  huntIndexCTA: 'Available',
+
 }
