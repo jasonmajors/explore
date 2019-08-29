@@ -1,7 +1,7 @@
 import { createStackNavigator, createSwitchNavigator } from "react-navigation";
 import { HomeScreen } from '../components/HomeScreen';
 import { DetailsScreen } from "../components/DetailsScreen";
-import { ModalScreen } from "../components/ModalScreen";
+import { ModalScreen } from "../screens/ModalScreen";
 import { LoginScreen } from "../screens/LoginScreen";
 import { ListingScreen } from "../screens/ListingScreen";
 import  { AuthLoadingScreen } from "../screens/AuthLoadingScreen";
@@ -13,6 +13,9 @@ const AppStack = createStackNavigator(
     },
     Details: {
       screen: DetailsScreen,
+    },
+    HuntPreviewModal: {
+      screen: ModalScreen,
     },
   },
   {
@@ -46,15 +49,8 @@ export const AppNavigator = createSwitchNavigator(
     AuthLoading: {
       screen: AuthLoadingScreen,
     },
-    App: {
-      screen: AppStack,
-    },
-    Auth: {
-      screen: AuthStack
-    },
-    MyModal: {
-      screen: ModalScreen,
-    },
+    App: AppStack,
+    Auth: AuthStack,
   },
   {
     initialRouteName: 'AuthLoading',

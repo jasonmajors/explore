@@ -24,7 +24,7 @@ export class HuntListing extends React.Component<any, any> {
                 containerStyle={ styles.buttonContainer }
                 buttonStyle={ styles.button }
                 title={ Strings.huntIndexCTA }
-                onPress={ () => alert('CTA!') }
+                onPress={ () => this.props.navigation.navigate('HuntPreviewModal') }
               />
               <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end', ...StyleSheet.absoluteFillObject }} >
                 <Ionicons

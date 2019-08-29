@@ -48,6 +48,7 @@ export class ListingScreen extends React.Component<any, any> {
           description={ hunt.description }
           image={ hunt.image }
           nextHunt={ () => this.goToNext() }
+          navigation={ this.props.navigation }
         />
       )
     })
