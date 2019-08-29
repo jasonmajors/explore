@@ -1,6 +1,7 @@
 import React from "react";
 import { ScrollView, Dimensions, Button } from "react-native";
 import { HuntListing } from "../components/HuntListing";
+import { firebase } from '../utils/firebase';
 
 export class ListingScreen extends React.Component<any, any> {
   static navigationOptions = {

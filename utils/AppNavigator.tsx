@@ -9,7 +9,7 @@ import  { AuthLoadingScreen } from "../screens/AuthLoadingScreen";
 const AppStack = createStackNavigator(
   {
     Home: {
-      screen: ListingScreen,
+      screen: HomeScreen,
     },
     Details: {
       screen: DetailsScreen,
