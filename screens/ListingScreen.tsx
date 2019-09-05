@@ -23,6 +23,9 @@ export class ListingScreen extends React.Component<any, any> {
     this.getHunts()
   }
 
+  /**
+   * Fetch the hunts from the database
+   */
   getHunts() {
     db.collection("Hunts")
     .onSnapshot(querySnapshot => {
@@ -34,6 +37,9 @@ export class ListingScreen extends React.Component<any, any> {
     });
   }
 
+  /**
+   * Toggles to the next Hunt in the list
+   */
   goToNext() : void {
     const { height } = Dimensions.get('window')
 
@@ -41,7 +47,6 @@ export class ListingScreen extends React.Component<any, any> {
   }
 
   render() {
-    console.log(this.state.huntListings)
     const { huntListings } = this.state
     const hunts = []
 

@@ -7,9 +7,10 @@ firebase.initializeApp(Expo.Constants.manifest.extra.firebase);
 
 const db = firebase.firestore()
 
-function listenForAuth(firebase, props) {
+function listenForAuth(firebase, props, context) {
   firebase.auth().onAuthStateChanged(user => {
     if (user != null) {
+      context.setUser(user)
       props.navigation.navigate('App')
     } else {
       props.navigation.navigate('Auth')

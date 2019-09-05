@@ -11,7 +11,7 @@ const AppStack = createStackNavigator(
     Home: {
       screen: ListingScreen,
     },
-    Details: {
+    TeamSetup: {
       screen: DetailsScreen,
     },
     HuntPreviewModal: {
