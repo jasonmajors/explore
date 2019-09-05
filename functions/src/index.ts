@@ -11,7 +11,7 @@ const newUser = (userRecord, context) => {
   const { email, uid } = userRecord;
 
   return db
-    .collection('Users')
+    .collection('users')
     .doc(uid)
     .set({ uid, email, purchasedHunts: [] })
     .catch(console.error);

@@ -26,8 +26,7 @@ export class ModalScreen extends React.Component<any, any> {
   // requirements: code (uuid? not guessable), approval by starter?
 
   createTeam() {
-    // TODO: This should be in the Context or something somewhere
-    const user = firebase.auth().currentUser
+    const user = this.context.user
     const huntId = this.props.navigation.getParam('huntId', 'INVALID')
 
     db.collection('teams')
@@ -44,13 +43,13 @@ export class ModalScreen extends React.Component<any, any> {
   }
 
   storeTeamId = async (teamId, user) => {
-    return db.collection('Users')
+    return db.collection('users')
       .doc(user.uid)
       .update({ teamId })
       .then(async () => {
         try {
           await AsyncStorage.setItem('activeTeam', teamId)
-          // Should also set in Context?
+          // Should also set in Context? Maybe only in context
         } catch (error) {
           console.log(error)
         }
@@ -59,6 +58,7 @@ export class ModalScreen extends React.Component<any, any> {
   // TODO: This should be on login
   getTeamId = async () => {
     try {
+      // Maybe only query from firebawse
       const teamId = await AsyncStorage.getItem('activeTeam');
       if (teamId !== null) {
         // We have data!!
@@ -74,11 +74,13 @@ export class ModalScreen extends React.Component<any, any> {
   }
 
   getTeamIdFromDb = async () => {
-    return db.collection('Users').doc()
+    return db.collection('users').doc()
 
   }
 
   render() {
+    const { user } = this.context
+    console.log(user)
     return (
       <View style={{ flex: 1, backgroundColor: 'teal' }}>
         <View style={{ flex: 0.6, alignItems: 'flex-start', justifyContent: 'flex-end', marginLeft: 20, marginRight: 20 }}>

@@ -10,8 +10,14 @@ const db = firebase.firestore()
 function listenForAuth(firebase, props, context) {
   firebase.auth().onAuthStateChanged(user => {
     if (user != null) {
-      context.setUser(user)
-      props.navigation.navigate('App')
+      db.collection('users').doc(user.uid).get()
+        .then(doc => {
+          // doesnt exist yet until the cloud func runs.... lame
+          if (doc.exists) {
+            context.setUser(doc.data())
+          }
+          props.navigation.navigate('App')
+        })
     } else {
       props.navigation.navigate('Auth')
     }
