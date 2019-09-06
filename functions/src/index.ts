@@ -7,16 +7,14 @@ admin.initializeApp();
 
 const db = admin.firestore();
 
-const newUser = (userRecord, context) => {
-  const { email, uid } = userRecord;
+exports.createUser = functions.https.onCall((userRecord, context) => {
+  const { email, uid } = userRecord
 
-  return db
-    .collection('users')
+  return db.collection('users')
     .doc(uid)
     .set({ uid, email, purchasedHunts: [] })
-    .catch(console.error);
-};
-
-module.exports = {
-  authOnCreate: functions.auth.user().onCreate(newUser),
-};
+    .then(() => {
+      return { uid, email, purchasedHunts: [] }
+    })
+    .catch(err => console.error(err));
+});

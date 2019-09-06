@@ -2,8 +2,11 @@
 import React from 'react';
 import { Text, View, Button } from 'react-native';
 import { firebase } from '../utils/firebase';
+import { UserContext } from '../context/UserContext';
 
 export class HomeScreen extends React.Component<any, any> {
+  static contextType = UserContext
+
   static navigationOptions = ({ navigation }) => {
     const params = navigation.state.params || {}
     return {
@@ -26,6 +29,8 @@ export class HomeScreen extends React.Component<any, any> {
   }
 
   render() {
+    const { user } = this.context
+    console.log(user)
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
         <Text>Home Screen</Text>
