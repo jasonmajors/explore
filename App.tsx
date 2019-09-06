@@ -12,9 +12,16 @@ export default class App extends React.Component {
     this.setState({ user })
   }
 
+  setTeamId = (teamId) => {
+    const { user } = this.state.user
+
+    this.setUser(user)
+  }
+
   state = {
     user: null,
-    setUser: this.setUser
+    setUser: this.setUser,
+    setTeamId: this.setTeamId,
   }
 
   render() {

@@ -33,7 +33,7 @@ export class ModalScreen extends React.Component<any, any> {
       .add({
         leader: user.uid,
         active: true,
-        hunt: huntId
+        hunt: huntId,
       })
       .then(doc => {
         this.storeTeamId(doc.id, user)
@@ -46,14 +46,10 @@ export class ModalScreen extends React.Component<any, any> {
     return db.collection('users')
       .doc(user.uid)
       .update({ teamId })
-      .then(async () => {
-        try {
-          await AsyncStorage.setItem('activeTeam', teamId)
-          // Should also set in Context? Maybe only in context
-        } catch (error) {
-          console.log(error)
-        }
+      .then(() => {
+        this.context.setTeamId(teamId)
       })
+      .catch(err => console.log(err))
   }
   // TODO: This should be on login
   getTeamId = async () => {
