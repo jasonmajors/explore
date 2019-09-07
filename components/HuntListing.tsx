@@ -24,7 +24,7 @@ export class HuntListing extends React.Component<any, any> {
                 containerStyle={ styles.buttonContainer }
                 buttonStyle={ styles.button }
                 title={ Strings.huntIndexCTA }
-                onPress={ () => this.props.navigation.navigate('HuntPreviewModal', {
+                onPress={ () => this.props.navigation.navigate('Details', {
                   huntId: title
                 }) }
               />

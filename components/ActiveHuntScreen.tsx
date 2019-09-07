@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 
-export class DetailsScreen extends React.Component {
+export class ActiveHuntScreen extends React.Component {
   static navigationOptions = {
     header: null
   }

@@ -1,21 +1,25 @@
 import { createStackNavigator, createSwitchNavigator } from "react-navigation";
 import { HomeScreen } from '../components/HomeScreen';
-import { DetailsScreen } from "../components/DetailsScreen";
-import { ModalScreen } from "../screens/ModalScreen";
+import { ActiveHuntScreen } from "../components/ActiveHuntScreen";
+import { HuntDetailsScreen } from "../screens/HuntDetailsScreen";
 import { LoginScreen } from "../screens/LoginScreen";
 import { ListingScreen } from "../screens/ListingScreen";
+import { TeamSetupScreen } from "../screens/TeamSetupScreen";
 import  { AuthLoadingScreen } from "../screens/AuthLoadingScreen";
 
 const AppStack = createStackNavigator(
   {
     Home: {
-      screen: HomeScreen,
+      screen: ListingScreen,
+    },
+    Details: {
+      screen: HuntDetailsScreen,
     },
     TeamSetup: {
-      screen: DetailsScreen,
+      screen: TeamSetupScreen,
     },
-    HuntPreviewModal: {
-      screen: ModalScreen,
+    Hunt: {
+      screen: ActiveHuntScreen,
     },
   },
   {
