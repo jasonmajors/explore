@@ -2,19 +2,33 @@ import React from "react"
 import {Modal, Text, StyleSheet, View, Button } from 'react-native';
 import { Input } from 'react-native-elements';
 import { db } from '../utils/firebase';
+import { UserContext } from "../context/UserContext";
 
 export class CreateTeamForm extends React.Component<any, any> {
+  state = { name: null }
+
+  static contextType = UserContext
+
   createTeam() {
-    const user = this.context.user
+    const { user } = this.context
+    const { name } = this.state
+    const { huntId } = this.props
 
     db.collection('teams')
       .add({
+        name: name,
         leader: user.uid,
-        hunt: this.props.huntId,
       })
-      .then(doc => {
-        // this.storeTeamId(doc.id, user)
-        //   .then(() => this.props.navigation.navigate("Hunt"))
+      .then(team => {
+        db.collection('hunts_teams_users')
+          .add({
+            teamId: team.id,
+            huntId: huntId,
+            userId: user.uid,
+          }).then(doc => {
+            // TODO: Navigate to TeamInvite screen
+            console.log(doc.data())
+          })
       })
       .catch(error => console.log(error))
   }
@@ -49,7 +63,7 @@ export class CreateTeamForm extends React.Component<any, any> {
               </View>
               <View style={{ flex: 0.5 }}>
                 <Button
-                  onPress={() => this.setState({ modalVisible: true })}
+                  onPress={() => this.createTeam() }
                   title="Create"
                 />
               </View>
@@ -62,8 +76,8 @@ export class CreateTeamForm extends React.Component<any, any> {
 }
 const styles = StyleSheet.create({
   textInput: {
-    color: 'white',
-    borderColor: 'white',
+    color: 'blue',
+    borderColor: 'blue',
     borderRadius: 8,
     borderWidth: 1,
     height: 50,

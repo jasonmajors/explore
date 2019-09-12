@@ -30,8 +30,10 @@ export class ListingScreen extends React.Component<any, any> {
     db.collection("Hunts")
     .onSnapshot(querySnapshot => {
       querySnapshot.forEach(hunt => {
+        const id = hunt.id
+
         this.setState(state => ({
-          huntListings: [...state.huntListings, hunt.data()]
+          huntListings: [...state.huntListings, { id, ...hunt.data() }]
         }))
       });
     });
@@ -54,6 +56,7 @@ export class ListingScreen extends React.Component<any, any> {
       hunts.push(
         <HuntListing
           key={ index }
+          huntId={ hunt.id }
           title={ hunt.title }
           description={ hunt.description }
           image={ hunt.image }

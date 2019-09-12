@@ -74,6 +74,7 @@ export class TeamSetupScreen extends React.Component<any, any> {
             </View>
             <View style={{ flex: 0.5 }}>
               <Button
+                disabled={true}
                 onPress={() => this.setState({ modalVisible: true })}
                 title="Join Team"
                 buttonStyle={{ marginLeft: 10, marginRight: 10 }}

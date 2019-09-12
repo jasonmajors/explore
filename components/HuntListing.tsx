@@ -6,9 +6,10 @@ import { Ionicons } from '@expo/vector-icons';
 
 export class HuntListing extends React.Component<any, any> {
     render() {
-      const { image, title, description, nextHunt } = this.props
+      const { huntId, image, title, description, nextHunt } = this.props
       const { height } = Dimensions.get('window')
 
+      console.log(huntId)
       return (
         <View style={{ backgroundColor: 'blue', height: height - 60 }}>
           <ImageBackground
@@ -24,9 +25,7 @@ export class HuntListing extends React.Component<any, any> {
                 containerStyle={ styles.buttonContainer }
                 buttonStyle={ styles.button }
                 title={ Strings.huntIndexCTA }
-                onPress={ () => this.props.navigation.navigate('Details', {
-                  huntId: title
-                }) }
+                onPress={ () => this.props.navigation.navigate('Details', { huntId }) }
               />
               <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end', ...StyleSheet.absoluteFillObject }} >
                 <Ionicons
