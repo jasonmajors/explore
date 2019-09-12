@@ -27,16 +27,17 @@ export class TeamSetupScreen extends React.Component<any, any> {
   }
 
   queryUsersTeams(user) {
+    // TODO: Change to query hunts_teams_users where userId == user.uid and get all the
+    // teamIds
     db.collection('teams').where('leader', "==", user.uid)
-      .get()
-      .then(querySnapshot => {
+      .onSnapshot(querySnapshot => {
+        const teams = []
         querySnapshot.forEach(team => {
-          this.setState(state => ({
-            teams: [...state.teams, team.data()]
-          }))
+          teams.push(team.data())
           // const team = doc.data()
           console.log(team.id, " => ", team.data())
         })
+        this.setState({ teams })
       })
   }
 

@@ -29,13 +29,11 @@ export class ListingScreen extends React.Component<any, any> {
   getHunts() {
     db.collection("Hunts")
     .onSnapshot(querySnapshot => {
+      const huntListings = []
       querySnapshot.forEach(hunt => {
-        const id = hunt.id
-
-        this.setState(state => ({
-          huntListings: [...state.huntListings, { id, ...hunt.data() }]
-        }))
-      });
+        huntListings.push({id: hunt.id, ...hunt.data() })
+      })
+      this.setState({ huntListings })
     });
   }
 
