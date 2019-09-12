@@ -25,7 +25,7 @@ export class HuntListing extends React.Component<any, any> {
                 containerStyle={ styles.buttonContainer }
                 buttonStyle={ styles.button }
                 title={ Strings.huntIndexCTA }
-                onPress={ () => this.props.navigation.navigate('Details', { huntId }) }
+                onPress={ () => this.props.navigation.navigate('Details', { huntId, huntTitle: title }) }
               />
               <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end', ...StyleSheet.absoluteFillObject }} >
                 <Ionicons
