@@ -1,5 +1,6 @@
 import React from "react";
-import { ScrollView, Dimensions, Button } from "react-native";
+import { ScrollView, Dimensions } from "react-native";
+import { Button, Icon } from "react-native-elements"
 import { HuntListing } from "../components/HuntListing";
 import { db } from '../utils/firebase';
 
@@ -8,9 +9,15 @@ export class ListingScreen extends React.Component<any, any> {
     title: "Hunts",
     headerRight: (
       <Button
+        type="clear"
         onPress={ () => alert('This is a button!') }
-        title="Info"
-        color="#fff"
+        icon={
+          <Icon
+            name="menu"
+            size={30}
+            color="white"
+          />
+        }
       />
     ),
   }

@@ -14,6 +14,7 @@ export class TeamSetupScreen extends React.Component<any, any> {
 
   state = {
     huntId: this.props.navigation.getParam('huntId', 'INVALID'),
+    huntTitle: this.props.navigation.getParam('huntTitle', 'INVALID'),
     teams: [],
     modalVisible: false,
   }
@@ -42,7 +43,7 @@ export class TeamSetupScreen extends React.Component<any, any> {
   }
 
   render() {
-    const { teams, modalVisible, huntId } = this.state
+    const { teams, modalVisible, huntId, huntTitle } = this.state
     const teamsList = []
 
     teams.forEach((team, i) => {
@@ -54,6 +55,9 @@ export class TeamSetupScreen extends React.Component<any, any> {
 
     return (
       <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, alignItems: "center", justifyContent: "center"}}>
+          <Text>Exploring: { huntTitle }</Text>
+        </View>
         <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
           <Text>Your teams:</Text>
           { teamsList }

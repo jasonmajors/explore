@@ -12,7 +12,7 @@ export class CreateTeamForm extends React.Component<any, any> {
   createTeam() {
     const { user } = this.context
     const { name } = this.state
-    const { huntId } = this.props
+    const { huntId, closeModal } = this.props
 
     db.collection('teams')
       .add({
@@ -26,7 +26,7 @@ export class CreateTeamForm extends React.Component<any, any> {
             huntId: huntId,
             userId: user.uid,
           }).then(doc => {
-            // TODO: Navigate to TeamInvite screen
+            closeModal()
             console.log(doc.data())
           })
       })

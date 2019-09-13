@@ -35,6 +35,7 @@ export class HuntDetailsScreen extends React.Component<any, any> {
 
   render() {
     const huntId = this.props.navigation.getParam('huntId', 'INVALID')
+    const huntTitle = this.props.navigation.getParam('huntTitle', 'INVALID')
     // TODO: Figure out what we want on details and pull it from the DB
     return (
       <View style={{ flex: 1, backgroundColor: 'teal' }}>
@@ -58,7 +59,7 @@ export class HuntDetailsScreen extends React.Component<any, any> {
           </View>
           <View style={{ flex: 1 }}>
             <Button
-              onPress={() => this.props.navigation.navigate("TeamSetup", { huntId })}
+              onPress={() => this.props.navigation.navigate("TeamSetup", { huntId, huntTitle })}
               title="Setup Team"
             />
           </View>
