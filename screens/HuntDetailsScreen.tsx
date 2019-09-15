@@ -7,32 +7,6 @@ export class HuntDetailsScreen extends React.Component<any, any> {
     header: null,
   }
 
-  // createTeam() {
-  //   const user = this.context.user
-
-  //   db.collection('teams')
-  //     .add({
-  //       leader: user.uid,
-  //       hunt: huntId,
-  //     })
-  //     .then(doc => {
-  //       this.storeTeamId(doc.id, user)
-  //         .then(() => this.props.navigation.navigate("Hunt"))
-  //     })
-  //     .catch(error => console.log(error))
-  // }
-
-  // storeTeamId = async (teamId, user) => {
-  //   return db.collection('users')
-  //     .doc(user.uid)
-  //     .update({ teamId })
-  //     .then(() => {
-  //       this.context.setTeamId(teamId)
-  //     })
-  //     .catch(err => console.log(err))
-  // }
-
-
   render() {
     const huntId = this.props.navigation.getParam('huntId', 'INVALID')
     const huntTitle = this.props.navigation.getParam('huntTitle', 'INVALID')
@@ -59,7 +33,7 @@ export class HuntDetailsScreen extends React.Component<any, any> {
           </View>
           <View style={{ flex: 1 }}>
             <Button
-              onPress={() => this.props.navigation.navigate("TeamSetup", { huntId, huntTitle })}
+              onPress={() => this.props.navigation.replace("TeamSetup", { huntId, huntTitle })}
               title="Setup Team"
             />
           </View>

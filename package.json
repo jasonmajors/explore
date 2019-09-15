@@ -10,6 +10,7 @@
   "dependencies": {
     "expo": "^34.0.1",
     "expo-font": "^6.0.1",
+    "expo-linear-gradient": "^6.0.0",
     "expo-location": "^6.0.0",
     "expo-task-manager": "^6.0.0",
     "firebase": "^6.4.0",
