@@ -8,6 +8,36 @@ admin.initializeApp()
 
 const db = admin.firestore()
 
+type Hunt = {
+  nodes: { [index: number]: Node }
+};
+
+type Node = {
+  longitude: number,
+  latitude: number,
+  address: string,
+};
+
+type GeoEncodeApiResponse = {
+  results: Array<GeoEncodeApiResult>,
+  status: string,
+};
+
+type GeoEncodeApiResult = {
+  formatted_address: string,
+  geometry: GeoEncodeGeometry,
+  place_id: string,
+};
+
+type GeoEncodeGeometry = {
+  location: GeoLocation,
+}
+
+type GeoLocation = {
+  lng: number,
+  lat: number,
+};
+
 /**
  * Creates a user record
  */
@@ -34,11 +64,24 @@ exports.setCoordinates = functions.firestore
     return addCoordinates(hunt, change)
   })
 
-function nodeRequiresCoordinates(node): Boolean {
+/**
+ * Checks whether or not we need to compute the long/lat of the node
+ *
+ * @param node Node'
+ * @return Boolean
+ */
+function nodeRequiresCoordinates(node: Node): Boolean {
+  // TODO: Check address updates and recalculate coordinates
   return node.longitude === undefined || node.latitude === undefined
 }
 
-async function lookUpGeoData(node): Promise<any> {
+/**
+ * Lookup the long/lat of of a node address
+ *
+ * @param node
+ * @return Promise<any>
+ */
+async function lookUpGeoData(node: Node): Promise<GeoEncodeApiResponse> {
   const uri = `https://maps.googleapis.com/maps/api/geocode/json`
   const key = functions.config().geocode.key
   const { address } = node
@@ -56,25 +99,36 @@ async function lookUpGeoData(node): Promise<any> {
   return request(options)
 }
 
-async function addCoordinates(hunt, change): Promise<void> {
+/**
+ * Create a GeoPoint object for firestore
+ *
+ * @param location GeoLocation
+ */
+function makeGeoPoint(location: GeoLocation) {
+  return new admin.firestore.GeoPoint(location.lat, location.lng)
+}
+
+/**
+ * Adds the GeoPoint long/lat data to a Hunt
+ *
+ * @param hunt Hunt
+ * @param change
+ */
+async function addCoordinates(hunt: Hunt, change): Promise<void> {
   if (hunt) {
     const numberOfNodes = Object.keys(hunt.nodes).length
 
     for (var i = 0; i < numberOfNodes; i++) {
       const node = hunt.nodes[i];
       if (nodeRequiresCoordinates(node)) {
-        // TODO: Check address updates and recalculate coordinates
         try {
           const response = await lookUpGeoData(node)
-          console.log(response)
+          console.log("Geocode API resp:", response)
           if (response.status === "OK") {
             // Just use the first match for now...
-            const location = response.results[0].geometry.location
-            console.log(location)
+            const location: GeoLocation = response.results[0].geometry.location
             db.collection('hunts').doc(change.after.id).update({
-              // TODO: get the real long/lat from the address
-              [`nodes.${i}.longtitude`]: location.lng,
-              [`nodes.${i}.latitude`]: location.lat
+              [`nodes.${i}.location`]: makeGeoPoint(location),
             })
           }
           // TODO: Handle the other responses
