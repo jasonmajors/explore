@@ -34,7 +34,7 @@ export class ListingScreen extends React.Component<any, any> {
    * Fetch the hunts from the database
    */
   getHunts() {
-    db.collection("Hunts")
+    db.collection("hunts")
     .onSnapshot(querySnapshot => {
       const huntListings = []
       querySnapshot.forEach(hunt => {
