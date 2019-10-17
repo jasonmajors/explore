@@ -1,6 +1,6 @@
 import { createStackNavigator, createSwitchNavigator } from "react-navigation";
 import { HomeScreen } from '../components/HomeScreen';
-import { ActiveHuntScreen } from "../components/ActiveHuntScreen";
+import { ActiveHuntScreen } from "../screens/ActiveHuntScreen";
 import { HuntDetailsScreen } from "../screens/HuntDetailsScreen";
 import { LoginScreen } from "../screens/LoginScreen";
 import { ListingScreen } from "../screens/ListingScreen";

@@ -11,7 +11,7 @@ export default class App extends React.Component {
   setUser = (user) => {
     this.setState({ user })
   }
-
+  // TODO: I don't think this is used...
   setTeamId = (teamId) => {
     const { user } = this.state.user
 
