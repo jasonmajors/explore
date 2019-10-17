@@ -17,6 +17,7 @@ export class CreateTeamForm extends React.Component<any, any> {
     db.collection('teams')
       .add({
         name: name,
+        // TODO: Don't know if we really need this leader mechanic for awhile
         leader: user.uid,
       })
       .then(team => {
@@ -25,6 +26,9 @@ export class CreateTeamForm extends React.Component<any, any> {
             teamId: team.id,
             huntId: huntId,
             userId: user.uid,
+            startedAt: null,
+            finishedAt: null,
+            cancelledAt: null
           }).then(doc => {
             closeModal()
             console.log(doc.data())
