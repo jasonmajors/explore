@@ -46,6 +46,8 @@ export class ListingScreen extends React.Component<any, any> {
 
   /**
    * Toggles to the next Hunt in the list
+   *
+   * @todo this doesn't work right... could just disable it
    */
   goToNext() : void {
     const { height } = Dimensions.get('window')

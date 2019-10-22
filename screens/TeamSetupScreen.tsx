@@ -112,6 +112,7 @@ export class TeamSetupScreen extends React.Component<any, any> {
           huntId={ huntId }
           visible={ modalVisible }
           closeModal={ () => this.setState({ modalVisible: false })}
+          navigation={ this.props.navigation }
         />
       </SafeAreaView>
     );

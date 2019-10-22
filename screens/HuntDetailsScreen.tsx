@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, Button } from 'react-native';
-import { db } from '../utils/firebase';
+import { BeginHuntCTA } from '../components/BeginHuntCTA';
 
 export class HuntDetailsScreen extends React.Component<any, any> {
   static navigationOptions = {
@@ -14,7 +14,7 @@ export class HuntDetailsScreen extends React.Component<any, any> {
     return (
       <View style={{ flex: 1, backgroundColor: 'teal' }}>
         <View style={{ flex: 0.6, alignItems: 'flex-start', justifyContent: 'flex-end', marginLeft: 20, marginRight: 20 }}>
-          <Text style={{ fontSize: 40, color: 'white' }}>Naples</Text>
+          <Text style={{ fontSize: 40, color: 'white' }}>{ huntTitle }</Text>
           <Text style={{ fontSize: 20, color: 'white' }}>herp derp content content its fun with your friends.. more content omg what happens if we keep going</Text>
         </View>
         <View style={{ flex: 0.5, alignItems: 'center', justifyContent: 'center' }}>
@@ -37,6 +37,11 @@ export class HuntDetailsScreen extends React.Component<any, any> {
               title="Setup Team"
             />
           </View>
+          {/* <View style={{ flex: 1 }}>
+            <BeginHuntCTA
+              huntId={ huntId }
+            />
+          </View> */}
         </View>
       </View>
     );

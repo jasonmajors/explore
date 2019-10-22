@@ -1,7 +1,7 @@
 import React from "react"
-import {Modal, Text, StyleSheet, View, Button } from 'react-native';
+import {Modal, StyleSheet, View, Button } from 'react-native';
 import { Input } from 'react-native-elements';
-import { db } from '../utils/firebase';
+import { db, firebase } from '../utils/firebase';
 import { UserContext } from "../context/UserContext";
 
 export class CreateTeamForm extends React.Component<any, any> {
@@ -30,11 +30,37 @@ export class CreateTeamForm extends React.Component<any, any> {
             finishedAt: null,
             cancelledAt: null
           }).then(doc => {
-            closeModal()
-            console.log(doc.data())
+            // closeModal()
+            console.log('starting hunt...')
+            // console.log(doc.data())
+            this.startHunt(huntId, team.id)
           })
       })
       .catch(error => console.log(error))
+  }
+  // TEMPORARY HACK UNTIL WE FLESH OUT TEAM INVITES
+  // Method belongs in BeginHuntCTA
+  startHunt(huntId, teamId) {
+    const { user } = this.context
+    db.collection('hunts_teams_users')
+      .where('userId', '==', user.uid)
+      .where('teamId', '==', teamId)
+      .where('huntId', '==', huntId)
+      .where('startedAt', '==', null)
+      .limit(1)
+      .get()
+      .then(querySnapshot => {
+        // Should only be one...
+        querySnapshot.forEach(doc => {
+          db.collection('hunts_teams_users').doc(doc.id).update({
+            startedAt: firebase.firestore.FieldValue.serverTimestamp()
+          })
+        })
+      }).then(() => {
+        console.log('Updated')
+        // Should update context to contain huntId and teamId probably...
+        this.props.navigation.replace("Hunt", { huntId })
+      }).catch(error => console.log(error))
   }
 
   render() {
