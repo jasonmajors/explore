@@ -15,23 +15,7 @@ function listenForAuth(firebase, props, context) {
         .then(async user => {
           if (user.exists) {
             // TODO: This should be its own function like redirectUser(user, context)
-            context.setUser(user.data())
-            // TODO: Check if user is in an active hunt
-            try {
-              const activeHuntResult = await getUsersActiveHunt(user.data())
-              if (activeHuntResult.empty) {
-                props.navigation.navigate('App')
-              } else {
-                // Can only be one
-                activeHuntResult.forEach(hunt => {
-                  setHuntContext(hunt, context)
-                })
-                props.navigation.navigate('Hunt')
-              }
-            } catch (error) {
-              console.log(error)
-              // Should probably redirect to App or something and clear out the context?
-            }
+            redirectUser(user, props, context)
           } else {
             // cloud func to create user
             createUser({ uid: user.uid, email: user.email })
@@ -58,6 +42,26 @@ async function getUsersActiveHunt(user) {
     .get()
 
   return results
+}
+
+async function redirectUser(user, props, context) {
+  context.setUser(user.data())
+  // Check if user is in active hunt
+  try {
+    const activeHuntResult = await getUsersActiveHunt(user.data())
+    if (activeHuntResult.empty) {
+      props.navigation.navigate('App')
+    } else {
+      // Can only be one
+      activeHuntResult.forEach(hunt => {
+        setHuntContext(hunt, context)
+      })
+      props.navigation.navigate('Hunt')
+    }
+  } catch (error) {
+    console.log(error)
+    // Should probably redirect to App or something and clear out the context?
+  }
 }
 
 function setHuntContext(hunt, context) {
