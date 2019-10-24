@@ -66,7 +66,11 @@ async function redirectUser(user, props, context) {
 
 function setHuntContext(hunt, context) {
   const { huntId, teamId } = hunt.data()
+  // While we could just pass teamId and huntId as nav params when we nav to the Hunt screen,
+  // we'll likely want to know this from other components so we can be like
+  // "Hey man you're suppoed to be in a hunt! Get back to it!"
 
+  // TODO: We should store the actual doc ref for hunts_teams_users in context too
   context.setTeamId(teamId)
   context.setHuntId(huntId)
 }

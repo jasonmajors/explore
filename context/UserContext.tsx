@@ -1,3 +1,3 @@
 import React from "react";
-
-export const UserContext = React.createContext({ user: null})
+// TODO: Setup a type for the context with the functions and fun stuff
+export const UserContext = React.createContext({ user: null })

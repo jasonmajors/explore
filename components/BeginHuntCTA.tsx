@@ -6,7 +6,7 @@ import { db, firebase } from '../utils/firebase';
 export class BeginHuntCTA extends React.Component<any, any> {
   static contextType = UserContext
 
-  startHunt(huntId, teamId) {
+  startHunt(huntId: string, teamId: string): void {
     const { user } = this.context
 
     db.collection('hunts_teams_users')

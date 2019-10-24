@@ -28,7 +28,9 @@ export class CreateTeamForm extends React.Component<any, any> {
             userId: user.uid,
             startedAt: null,
             finishedAt: null,
-            cancelledAt: null
+            cancelledAt: null,
+            // TODO: Doesn't do anything yet... but we'll want some kind of permissions for what the user can do on this hunt
+            permissions: [],
           }).then(doc => {
             // closeModal()
             console.log('starting hunt...')
