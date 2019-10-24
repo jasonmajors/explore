@@ -9,7 +9,7 @@ export class CreateTeamForm extends React.Component<any, any> {
 
   static contextType = UserContext
 
-  createTeam() {
+  createTeam(): void {
     const { user } = this.context
     const { name } = this.state
     const { huntId, closeModal } = this.props
@@ -33,6 +33,7 @@ export class CreateTeamForm extends React.Component<any, any> {
             // closeModal()
             console.log('starting hunt...')
             // console.log(doc.data())
+            // TODO: THIS IS TEMP - Ideally, we just close the modal and continue to team invites and shit
             this.startHunt(huntId, team.id)
           })
       })
@@ -40,10 +41,9 @@ export class CreateTeamForm extends React.Component<any, any> {
   }
   // TEMPORARY HACK UNTIL WE FLESH OUT TEAM INVITES
   // Method belongs in BeginHuntCTA
-  startHunt(huntId, teamId) {
-    const { user } = this.context
+  startHunt(huntId: string, teamId: string): void {
     db.collection('hunts_teams_users')
-      .where('userId', '==', user.uid)
+      .where('userId', '==', this.context.user.uid)
       .where('teamId', '==', teamId)
       .where('huntId', '==', huntId)
       .where('startedAt', '==', null)
@@ -58,8 +58,9 @@ export class CreateTeamForm extends React.Component<any, any> {
         })
       }).then(() => {
         console.log('Updated')
-        // Should update context to contain huntId and teamId probably...
-        this.props.navigation.replace("Hunt", { huntId })
+        this.context.setTeamId(teamId)
+        this.context.setHuntId(huntId)
+        this.props.navigation.replace("Hunt")
       }).catch(error => console.log(error))
   }
 

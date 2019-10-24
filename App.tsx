@@ -13,15 +13,18 @@ export default class App extends React.Component {
   }
   // TODO: I don't think this is used...
   setTeamId = (teamId) => {
-    const { user } = this.state.user
+    this.setState({ teamId })
+  }
 
-    this.setUser(user)
+  setHuntId = (huntId) => {
+    this.setState({ huntId })
   }
 
   state = {
     user: null,
     setUser: this.setUser,
     setTeamId: this.setTeamId,
+    setHuntId: this.setHuntId,
   }
 
   render() {

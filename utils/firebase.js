@@ -12,10 +12,26 @@ function listenForAuth(firebase, props, context) {
   firebase.auth().onAuthStateChanged(user => {
     if (user != null) {
       db.collection('users').doc(user.uid).get()
-        .then(doc => {
-          if (doc.exists) {
-            context.setUser(doc.data())
-            props.navigation.navigate('App')
+        .then(async user => {
+          if (user.exists) {
+            // TODO: This should be its own function like redirectUser(user, context)
+            context.setUser(user.data())
+            // TODO: Check if user is in an active hunt
+            try {
+              const activeHuntResult = await getUsersActiveHunt(user.data())
+              if (activeHuntResult.empty) {
+                props.navigation.navigate('App')
+              } else {
+                // Can only be one
+                activeHuntResult.forEach(hunt => {
+                  setHuntContext(hunt, context)
+                })
+                props.navigation.navigate('Hunt')
+              }
+            } catch (error) {
+              console.log(error)
+              // Should probably redirect to App or something and clear out the context?
+            }
           } else {
             // cloud func to create user
             createUser({ uid: user.uid, email: user.email })
@@ -29,6 +45,26 @@ function listenForAuth(firebase, props, context) {
       props.navigation.navigate('Auth')
     }
   });
+}
+
+async function getUsersActiveHunt(user) {
+  const start = new Date('2019-01-01')
+  const results = await db.collection('hunts_teams_users')
+    .where('userId', '==', user.uid)
+    .where('startedAt', '>', start)
+    .where('finishedAt', '==', null)
+    .where('cancelledAt', '==', null)
+    .limit(1)
+    .get()
+
+  return results
+}
+
+function setHuntContext(hunt, context) {
+  const { huntId, teamId } = hunt.data()
+
+  context.setTeamId(teamId)
+  context.setHuntId(huntId)
 }
 
 module.exports = {
