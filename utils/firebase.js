@@ -48,13 +48,13 @@ async function redirectUser(user, props, context) {
   context.setUser(user.data())
   // Check if user is in active hunt
   try {
-    const activeHuntResult = await getUsersActiveHunt(user.data())
-    if (activeHuntResult.empty) {
+    const querySnapshot = await getUsersActiveHunt(user.data())
+    if (querySnapshot.empty) {
       props.navigation.navigate('App')
     } else {
       // Can only be one
-      activeHuntResult.forEach(hunt => {
-        setHuntContext(hunt, context)
+      querySnapshot.forEach(activeHuntPivot => {
+        setActiveHuntContext(activeHuntPivot, context)
       })
       props.navigation.navigate('Hunt')
     }
@@ -64,15 +64,11 @@ async function redirectUser(user, props, context) {
   }
 }
 
-function setHuntContext(hunt, context) {
-  const { huntId, teamId } = hunt.data()
-  // While we could just pass teamId and huntId as nav params when we nav to the Hunt screen,
+function setActiveHuntContext(activeHuntPivot, context) {
+  // While we could just pass this as nav params when we nav to the Hunt screen,
   // we'll likely want to know this from other components so we can be like
   // "Hey man you're suppoed to be in a hunt! Get back to it!"
-
-  // TODO: We should store the actual doc ref for hunts_teams_users in context too
-  context.setTeamId(teamId)
-  context.setHuntId(huntId)
+  context.setActiveHuntPivotId(activeHuntPivot.id)
 }
 
 module.exports = {

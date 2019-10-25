@@ -11,26 +11,22 @@ export default class App extends React.Component {
   setUser = (user) => {
     this.setState({ user })
   }
-  // TODO: I don't think this is used...
-  setTeamId = (teamId) => {
-    this.setState({ teamId })
-  }
 
-  setHuntId = (huntId) => {
-    this.setState({ huntId })
+  setActiveHuntPivotId = (activeHuntPivotId) => {
+    this.setState({ activeHuntPivotId })
   }
 
   state = {
     user: null,
     setUser: this.setUser,
-    setTeamId: this.setTeamId,
-    setHuntId: this.setHuntId,
+    activeHuntPivotId: null,
+    setActiveHuntPivotId: this.setActiveHuntPivotId,
   }
 
   render() {
     return (
       <UserContext.Provider value={ this.state }>
-          <AppContainer />
+        <AppContainer />
       </UserContext.Provider>
     )
   }

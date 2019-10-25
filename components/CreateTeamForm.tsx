@@ -26,6 +26,7 @@ export class CreateTeamForm extends React.Component<any, any> {
             teamId: team.id,
             huntId: huntId,
             userId: user.uid,
+            currentNode: 0,
             startedAt: null,
             finishedAt: null,
             cancelledAt: null,
