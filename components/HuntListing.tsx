@@ -9,7 +9,6 @@ export class HuntListing extends React.Component<any, any> {
       const { huntId, image, title, description, nextHunt } = this.props
       const { height } = Dimensions.get('window')
 
-      console.log(huntId)
       return (
         <View style={{ backgroundColor: 'blue', height: height - 60 }}>
           <ImageBackground

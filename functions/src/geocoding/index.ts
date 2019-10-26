@@ -11,7 +11,7 @@ const request = require('request-promise');
 /**
  * Checks whether or not we need to compute the long/lat of the node
  *
- * @param node Node'
+ * @param node Node
  * @return Boolean
  */
 function nodeRequiresCoordinates(node: Node): Boolean {

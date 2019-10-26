@@ -1,18 +1,20 @@
-import * as firebase from 'firebase'  // Should not be used elsewhere in the project
+import * as fb from 'firebase'  // Should not be used elsewhere in the project
 
 require('firebase/firestore')
 require('firebase/functions')
 
-firebase.initializeApp(Expo.Constants.manifest.extra.firebase);
+fb.initializeApp(Expo.Constants.manifest.extra.firebase);
 
-const db = firebase.firestore()
-const createUser = firebase.functions().httpsCallable('createUser')
+const createUser = fb.functions().httpsCallable('createUser')
 
-function listenForAuth(firebase, props, context) {
+export const db = fb.firestore()
+export const firebase = fb
+
+export function listenForAuth(firebase, props, context): void {
   firebase.auth().onAuthStateChanged(user => {
     if (user != null) {
       db.collection('users').doc(user.uid).get()
-        .then(async user => {
+        .then(async (user: any) => {
           if (user.exists) {
             // TODO: This should be its own function like redirectUser(user, context)
             redirectUser(user, props, context)
@@ -69,10 +71,4 @@ function setActiveHuntContext(activeHuntPivot, context) {
   // we'll likely want to know this from other components so we can be like
   // "Hey man you're suppoed to be in a hunt! Get back to it!"
   context.setActiveHuntPivotId(activeHuntPivot.id)
-}
-
-module.exports = {
-  firebase,
-  listenForAuth,
-  db,
 }

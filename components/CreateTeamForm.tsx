@@ -58,12 +58,9 @@ export class CreateTeamForm extends React.Component<any, any> {
           db.collection('hunts_teams_users').doc(doc.id).update({
             startedAt: firebase.firestore.FieldValue.serverTimestamp()
           })
+          this.context.setActiveHuntPivotId(doc.id)
+          this.props.navigation.replace("Hunt")
         })
-      }).then(() => {
-        console.log('Updated')
-        this.context.setTeamId(teamId)
-        this.context.setHuntId(huntId)
-        this.props.navigation.replace("Hunt")
       }).catch(error => console.log(error))
   }
 

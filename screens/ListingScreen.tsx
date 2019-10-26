@@ -26,22 +26,20 @@ export class ListingScreen extends React.Component<any, any> {
     huntListings: []
   }
 
-  componentDidMount() {
-    this.getHunts()
-  }
-
   /**
    * Fetch the hunts from the database
    */
   getHunts() {
-    db.collection("hunts")
-    .onSnapshot(querySnapshot => {
-      const huntListings = []
-      querySnapshot.forEach(hunt => {
-        huntListings.push({id: hunt.id, ...hunt.data() })
+    return db.collection("hunts")
+      .onSnapshot(querySnapshot => {
+        const huntListings = []
+        querySnapshot.forEach(hunt => {
+          huntListings.push({id: hunt.id, ...hunt.data() })
+        })
+        this.setState({ huntListings })
+      }, error => {
+        console.log(error)
       })
-      this.setState({ huntListings })
-    });
   }
 
   /**

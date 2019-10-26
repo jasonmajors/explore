@@ -23,13 +23,14 @@ export class LoginScreen extends React.Component<any, any> {
 
   static contextType = UserContext
 
+  componentDidMount() {
+    listenForAuth(firebase, this.props, this.context)
+  }
+
   register() {
     if (this.state.email && this.state.password) {
       const { email, password } = this.state;
       firebase.auth().createUserWithEmailAndPassword(email, password)
-        // TODO: Kind of surprised this works... Listener could be set in the constructor or componentDidMount hook
-        // if bugs occur
-        .then(listenForAuth(firebase, this.props, this.context))
         .catch(error => {
           // Handle Errors here.
           this.setError(error.message)
@@ -43,7 +44,6 @@ export class LoginScreen extends React.Component<any, any> {
     if (this.state.email && this.state.password) {
       const { email, password } = this.state;
       firebase.auth().signInWithEmailAndPassword(email, password)
-        .then(listenForAuth(firebase, this.props, this.context))
         .catch(error => {
           console.log(error)
           // Handle Errors here.

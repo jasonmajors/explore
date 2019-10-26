@@ -21,10 +21,11 @@ export class HomeScreen extends React.Component<any, any> {
   }
 
   signOut() {
-    firebase.auth().signOut().then(function() {
+    firebase.auth().signOut().then(() => {
       this.props.navigation.navigate('Auth')
     }).catch(function(error) {
       // An error happened.
+      console.log(error)
     });
   }
 
