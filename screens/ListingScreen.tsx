@@ -26,6 +26,10 @@ export class ListingScreen extends React.Component<any, any> {
     huntListings: []
   }
 
+  componentDidMount() {
+    this.getHunts()
+  }
+
   /**
    * Fetch the hunts from the database
    */

@@ -19,7 +19,7 @@ const AppStack = createStackNavigator(
       screen: TeamSetupScreen,
     },
     Hunt: {
-      screen: HomeScreen,
+      screen: ActiveHuntScreen,
     },
   },
   {
