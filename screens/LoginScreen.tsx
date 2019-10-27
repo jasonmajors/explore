@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, ImageBackground, SafeAreaView, TouchableHighlight } from "react-native";
 import { Input, Button, SocialIcon } from 'react-native-elements';
-import { auth } from '../utils/firebase';
+import Auth from '../utils/Auth';
 import { UserContext } from "../context/UserContext";
 
 export class LoginScreen extends React.Component<any, any> {
@@ -24,13 +24,13 @@ export class LoginScreen extends React.Component<any, any> {
   static contextType = UserContext
 
   componentDidMount() {
-    auth.handleAuthState(this.props.navigation, this.context)
+    Auth.handleAuthState(this.props.navigation, this.context)
   }
 
   async register(): Promise<void> {
     if (this.state.email && this.state.password) {
       const { email, password } = this.state;
-      const error: string = await auth.register(email, password)
+      const error: string = await Auth.register(email, password)
       if (error) {
         this.setError(error)
       }
@@ -42,7 +42,7 @@ export class LoginScreen extends React.Component<any, any> {
   async login(): Promise<void> {
     if (this.state.email && this.state.password) {
       const { email, password } = this.state;
-      const error = await auth.login(email, password)
+      const error = await Auth.login(email, password)
       if (error) {
         this.setError(error)
       }

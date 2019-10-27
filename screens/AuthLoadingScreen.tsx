@@ -6,14 +6,14 @@ import {
     StyleSheet,
   } from 'react-native';
 
-import { auth } from '../utils/firebase';
+import Auth from '../utils/Auth';
 import { UserContext } from "../context/UserContext";
 
 export class AuthLoadingScreen extends React.Component<any, any> {
   static contextType = UserContext
 
   componentDidMount() {
-    auth.handleAuthState(this.props.navigation, this.context)
+    Auth.handleAuthState(this.props.navigation, this.context)
   }
 
   // Render any loading content that you like here
