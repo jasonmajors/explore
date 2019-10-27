@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, ImageBackground, SafeAreaView, TouchableHighlight } from "react-native";
 import { Input, Button, SocialIcon } from 'react-native-elements';
-import { firebase, listenForAuth } from '../utils/firebase';
+import { auth } from '../utils/firebase';
 import { UserContext } from "../context/UserContext";
 
 export class LoginScreen extends React.Component<any, any> {
@@ -24,37 +24,34 @@ export class LoginScreen extends React.Component<any, any> {
   static contextType = UserContext
 
   componentDidMount() {
-    listenForAuth(firebase, this.props, this.context)
+    auth.handleAuthState(this.props.navigation, this.context)
   }
 
-  register() {
+  async register(): Promise<void> {
     if (this.state.email && this.state.password) {
       const { email, password } = this.state;
-      firebase.auth().createUserWithEmailAndPassword(email, password)
-        .catch(error => {
-          // Handle Errors here.
-          this.setError(error.message)
-      });
+      const error: string = await auth.register(email, password)
+      if (error) {
+        this.setError(error)
+      }
     } else {
       // error - required fields
     }
   }
 
-  login() {
+  async login(): Promise<void> {
     if (this.state.email && this.state.password) {
       const { email, password } = this.state;
-      firebase.auth().signInWithEmailAndPassword(email, password)
-        .catch(error => {
-          console.log(error)
-          // Handle Errors here.
-          this.setError(error.message)
-      });
+      const error = await auth.login(email, password)
+      if (error) {
+        this.setError(error)
+      }
     } else {
       // error - required fields
     }
   }
 
-  setError(errorMessage) {
+  setError(errorMessage: string): void {
     this.setState({ error: errorMessage })
   }
 

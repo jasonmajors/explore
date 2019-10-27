@@ -7,6 +7,10 @@ import { CreateTeamForm } from '../components/CreateTeamForm';
 import Constants from 'expo-constants';
 import { LinearGradient } from 'expo-linear-gradient';
 
+/**
+ * @todo There's a bug where on first registration (not login), this.context.user is not defined
+ *       when trying to setup a team for some reason
+ */
 export class TeamSetupScreen extends React.Component<any, any> {
   static navigationOptions = {
     header: null,
@@ -22,11 +26,13 @@ export class TeamSetupScreen extends React.Component<any, any> {
   }
 
   setModalVisible(visible) {
-    this.setState({modalVisible: visible});
+    this.setState({ modalVisible: visible });
   }
 
   componentDidMount() {
-    this.queryUsersTeams(this.context.user)
+    console.log(this.context)
+    const { user } = this.context
+    this.queryUsersTeams(user)
   }
 
   queryUsersTeams(user) {
