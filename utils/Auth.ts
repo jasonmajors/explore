@@ -1,4 +1,4 @@
-import { firebase, db } from './firebase'
+import { firebase, db } from '../services/firebase'
 import { NavigationScreenProp } from 'react-navigation';
 import { DocumentSnapshot, DocumentData, QueryDocumentSnapshot } from '@firebase/firestore-types';
 

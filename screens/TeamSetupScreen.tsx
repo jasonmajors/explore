@@ -2,7 +2,7 @@ import React from "react"
 import { Text, View, SafeAreaView, ScrollView } from "react-native";
 import { Button, Avatar } from "react-native-elements";
 import { UserContext } from '../context/UserContext';
-import { db } from '../utils/firebase';
+import { db } from '../services/firebase';
 import { CreateTeamForm } from '../components/CreateTeamForm';
 import Constants from 'expo-constants';
 import { LinearGradient } from 'expo-linear-gradient';

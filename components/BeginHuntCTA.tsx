@@ -1,7 +1,7 @@
 import React from "react"
 import { UserContext } from "../context/UserContext";
 import { Button } from "react-native";
-import { db } from '../utils/firebase';
+import { db } from '../services/firebase';
 
 export class BeginHuntCTA extends React.Component<any, any> {
   static contextType = UserContext

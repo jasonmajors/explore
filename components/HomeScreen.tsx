@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Text, View, Button } from 'react-native';
-import { firebase } from '../utils/firebase';
+import { firebase } from '../services/firebase';
 import { UserContext } from '../context/UserContext';
 
 export class HomeScreen extends React.Component<any, any> {

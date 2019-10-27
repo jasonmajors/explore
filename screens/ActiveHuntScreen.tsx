@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import { UserContext } from '../context/UserContext';
-import { db } from '../utils/firebase';
+import { db } from '../services/firebase';
 import { DocumentReference } from '@firebase/firestore-types'
 
 export class ActiveHuntScreen extends React.Component<any, any> {

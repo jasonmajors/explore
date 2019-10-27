@@ -2,7 +2,7 @@ import React from "react";
 import { ScrollView, Dimensions } from "react-native";
 import { Button, Icon } from "react-native-elements"
 import { HuntListing } from "../components/HuntListing";
-import { db } from '../utils/firebase';
+import { db } from '../services/firebase';
 
 export class ListingScreen extends React.Component<any, any> {
   static navigationOptions = {
@@ -32,6 +32,9 @@ export class ListingScreen extends React.Component<any, any> {
 
   /**
    * Fetch the hunts from the database
+   *
+   * @todo This is still possibly causing problems at logout, since the user no longer
+   * has permissions to subscribe. It should be handled by the cb func at the end but still getting expo errors...
    */
   getHunts() {
     return db.collection("hunts")

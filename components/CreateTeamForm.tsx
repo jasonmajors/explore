@@ -1,7 +1,7 @@
 import React from "react"
 import {Modal, StyleSheet, View, Button } from 'react-native';
 import { Input } from 'react-native-elements';
-import { db, firebase } from '../utils/firebase';
+import { db, firebase } from '../services/firebase';
 import { UserContext } from "../context/UserContext";
 
 export class CreateTeamForm extends React.Component<any, any> {
