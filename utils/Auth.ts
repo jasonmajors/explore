@@ -3,6 +3,10 @@ import { NavigationScreenProp } from 'react-navigation';
 import { DocumentSnapshot, DocumentData, QueryDocumentSnapshot } from '@firebase/firestore-types';
 
 class Auth {
+
+  /**
+   * @type firebase.auth.Auth
+   */
   private _auth: firebase.auth.Auth
 
   constructor() {
@@ -14,6 +18,7 @@ class Auth {
    *
    * @param email
    * @param password
+   * @return error If there's an error, we'll return the message, or else we'll return null
    */
   public async login(email: string, password: string): Promise<string | null> {
     let errorMessage = null
@@ -31,6 +36,7 @@ class Auth {
    *
    * @param email
    * @param password
+   * @return error If there's an error, we'll return the message, or else we'll return null
    */
   public async register(email: string, password: string): Promise<string | null> {
     let errorMessage = null
