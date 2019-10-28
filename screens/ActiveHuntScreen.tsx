@@ -1,8 +1,10 @@
 import React from 'react';
+import { Alert } from 'react-native';
 import { Text, View } from 'react-native';
 import { UserContext } from '../context/UserContext';
 import { db } from '../services/firebase';
 import { DocumentReference } from '@firebase/firestore-types'
+import { Button } from 'react-native-elements';
 
 export class ActiveHuntScreen extends React.Component<any, any> {
   constructor(props) {
@@ -10,7 +12,8 @@ export class ActiveHuntScreen extends React.Component<any, any> {
 
     this.state = {
       title: '',
-      currentNode: null,
+      content: null,
+      hint: '',
     }
   }
 
@@ -29,17 +32,29 @@ export class ActiveHuntScreen extends React.Component<any, any> {
     const { activeHuntPivotId } = this.context
 
     const activeHunt: DocumentReference = await this.fetchActiveHunt(activeHuntPivotId)
-
+    // Subscribe to the current hunt to set node
     activeHunt.onSnapshot(currentHunt => {
-      const { currentNode, huntId } = currentHunt.data()
+      const { currentNode, currentHint, huntId } = currentHunt.data()
       db.collection('hunts').doc(huntId)
         .get()
         .then(hunt => {
           if (hunt.exists) {
-            const { title } = hunt.data()
+            const { title, nodes } = hunt.data()
+            // Could be its own func
+            Object.keys(nodes).forEach(key => {
+              if (nodes[key].position === currentNode) {
+                // Set the current hunt content
+                this.setState({ content: nodes[key].content })
+                nodes[key].hints.forEach(hint => {
+                  if (hint.position === currentHint) {
+                    // load the current hint the user can look at
+                    this.setState({ hint: hint.value })
+                  }
+                })
+              }
+            })
 
             this.setState({ title })
-            this.setState({ currentNode })
             console.log('currently on step: ', currentNode)
           } else {
             // no hunt? redirect back to App I guess...
@@ -53,11 +68,16 @@ export class ActiveHuntScreen extends React.Component<any, any> {
   }
 
   render() {
-    const { title, currentNode } = this.state
+    const { title, content, hint } = this.state
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
         <Text>{ title }</Text>
-        <Text>{ currentNode }</Text>
+        <Text>{ content }</Text>
+        {/* TODO: Track hint usage */}
+        <Button
+          title="Hint!"
+          onPress={ () => Alert.alert('Ok...', hint) }
+        />
       </View>
     );
   }
