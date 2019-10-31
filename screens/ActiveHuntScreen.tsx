@@ -5,6 +5,7 @@ import { UserContext } from '../context/UserContext';
 import { db } from '../services/firebase';
 import { DocumentReference } from '@firebase/firestore-types'
 import { Button } from 'react-native-elements';
+import SubmitLocation from '../components/SubmitLocation';
 
 export class ActiveHuntScreen extends React.Component<any, any> {
   constructor(props) {
@@ -12,8 +13,8 @@ export class ActiveHuntScreen extends React.Component<any, any> {
 
     this.state = {
       title: '',
-      content: null,
       hint: '',
+      node: { content: '' },
     }
   }
 
@@ -43,8 +44,8 @@ export class ActiveHuntScreen extends React.Component<any, any> {
             // Could be its own func
             Object.keys(nodes).forEach(key => {
               if (nodes[key].position === currentNode) {
-                // Set the current hunt content
-                this.setState({ content: nodes[key].content })
+                // Set the current hunt node
+                this.setState({ node: nodes[key] })
                 nodes[key].hints.forEach(hint => {
                   if (hint.position === currentHint) {
                     // load the current hint the user can look at
@@ -68,16 +69,17 @@ export class ActiveHuntScreen extends React.Component<any, any> {
   }
 
   render() {
-    const { title, content, hint } = this.state
+    const { title, node, hint } = this.state
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
         <Text>{ title }</Text>
-        <Text>{ content }</Text>
+        <Text>{ node.content }</Text>
         {/* TODO: Track hint usage */}
         <Button
           title="Hint!"
           onPress={ () => Alert.alert('Ok...', hint) }
         />
+        <SubmitLocation node={ node } />
       </View>
     );
   }

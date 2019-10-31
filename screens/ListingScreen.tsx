@@ -22,12 +22,18 @@ export class ListingScreen extends React.Component<any, any> {
     ),
   }
 
+  private huntSub
+
   state = {
-    huntListings: []
+    huntListings: [],
   }
 
   componentDidMount() {
-    this.getHunts()
+    this.huntSub = this.getHunts()
+  }
+
+  componentWillUnmount() {
+    this.huntSub()
   }
 
   /**

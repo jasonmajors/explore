@@ -82,7 +82,7 @@ class Auth {
    */
   private createUser(user: firebase.User): Promise<firebase.functions.HttpsCallableResult> {
     const { uid, email } = user
-    // Might not be able to use the shorthand here... i recall this being problematic with cloud funcs
+
     return firebase.functions().httpsCallable('createUser')({ uid, email })
   }
 
@@ -116,15 +116,16 @@ class Auth {
   /**
    * Sets the active hunt the user is doing in the context
    *
+   * We want the ID in the context so we can subscribe to it where we need it, rather than just storing its state
+   * at this time.
+   *
    * @param activeHuntPivot
    * @param context
    */
   private setActiveHuntContext(activeHuntPivot: QueryDocumentSnapshot, context): void {
-    // While we could just pass this as nav params when we nav to the Hunt screen,
-    // we'll likely want to know this from other components so we can be like
-    // "Hey man you're suppoed to be in a hunt! Get back to it!"
     context.setActiveHuntPivotId(activeHuntPivot.id)
   }
+
   // TODO: Should live in a /queries file
   private async getUsersActiveHunt(user: DocumentData): Promise<firebase.firestore.QuerySnapshot> {
     const start = new Date('2019-01-01')

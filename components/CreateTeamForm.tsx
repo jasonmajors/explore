@@ -71,10 +71,10 @@ export class CreateTeamForm extends React.Component<any, any> {
     return (
       <View>
         <Modal
-        animationType="slide"
-        transparent={false}
-        visible={ visible }
-        onRequestClose={ () => closeModal() }>
+          animationType="slide"
+          transparent={false}
+          visible={ visible }
+          onRequestClose={ () => closeModal() }>
           <View style={{ flex: 1 }}>
             <View>
               <Input
