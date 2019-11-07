@@ -33,6 +33,7 @@
       }
     },
     "extra": {
+      "proximity": 25,
       "firebase": {
         "apiKey": "AIzaSyDgsCnweBFYTXE-6u76TXsJfVhwTOTpGHw",
         "authDomain": "explore-6d63a.firebaseapp.com",
