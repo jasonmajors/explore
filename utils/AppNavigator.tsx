@@ -6,6 +6,7 @@ import { LoginScreen } from "../screens/LoginScreen";
 import { ListingScreen } from "../screens/ListingScreen";
 import { TeamSetupScreen } from "../screens/TeamSetupScreen";
 import  { AuthLoadingScreen } from "../screens/AuthLoadingScreen";
+import HuntCompleted from "../screens/HuntCompleted";
 
 const AppStack = createStackNavigator(
   {
@@ -21,6 +22,9 @@ const AppStack = createStackNavigator(
     Hunt: {
       screen: ActiveHuntScreen,
     },
+    Completed: {
+      screen: HuntCompleted,
+    }
   },
   {
     initialRouteName: "Home",

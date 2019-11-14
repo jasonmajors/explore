@@ -2,11 +2,12 @@ import React, { useState, useEffect, useContext } from "react"
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 import { Button } from "react-native-elements";
-import { Platform, View, Modal, Text } from "react-native";
+import { Platform, View, Modal, Text, StyleSheet } from "react-native";
 import Constants from 'expo-constants';
 import { getDistance } from "geolib";
 import { Accuracy } from "expo-location";
 import { UserContext } from "../context/UserContext";
+import { incrementHuntNode } from "../queries";
 
 type SubmitLocationProps = {
   node: any
@@ -15,6 +16,9 @@ type SubmitLocationProps = {
 function SubmitLocation(props: SubmitLocationProps) {
   const [response, setResponse] = useState('')
   const [visible, setContentVisible] = useState(false)
+
+  const context = useContext(UserContext)
+
   // TODO: This is dumb here, but whatever - only need it for dev
   useEffect(() => {
     if (Platform.OS === 'android' && !Constants.isDevice) {
@@ -44,18 +48,17 @@ function SubmitLocation(props: SubmitLocationProps) {
     if (distance <= proximity) {
       response = "You did it!"
       updateCurrentNode()
+      // TODO: Need to check if it's the last node somehow and be like "You won"
     } else {
-      response = `${distance}`
+      response = `Not quite! ${distance} meters away`
     }
     setResponse(response)
     // TODO: Save the location for auditing and metrics
   }
 
-  const updateCurrentNode = async () => {
-    const context = useContext(UserContext)
+  const updateCurrentNode = async (): Promise<void> => {
     // Get our current hunt and increment the currentNode
-    const { activeHuntPivotId } = context
-    console.log(activeHuntPivotId)
+    incrementHuntNode(context.activeHuntPivotId)
   }
 
   const getDistanceFromCurrentLocation = (location: Location.LocationData): number => {
@@ -80,8 +83,8 @@ function SubmitLocation(props: SubmitLocationProps) {
         visible={ visible }
         onRequestClose={ () => setContentVisible(false) }
       >
-        <View>
-          <Text>{ response }</Text>
+        <View style={ styles.container }>
+          <Text style={ styles.paragraph }>{ response }</Text>
           <Button
             title="ok cool"
             onPress={ () => setContentVisible(false) }
@@ -91,5 +94,19 @@ function SubmitLocation(props: SubmitLocationProps) {
     </View>
   )
 }
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: Constants.statusBarHeight,
+    backgroundColor: '#ecf0f1',
+  },
+  paragraph: {
+    margin: 24,
+    fontSize: 18,
+    textAlign: 'center',
+  },
+});
 
 export default SubmitLocation

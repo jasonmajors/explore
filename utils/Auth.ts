@@ -1,6 +1,11 @@
 import { firebase, db } from '../services/firebase'
 import { NavigationScreenProp } from 'react-navigation';
-import { DocumentSnapshot, DocumentData, QueryDocumentSnapshot } from '@firebase/firestore-types';
+import {
+  DocumentSnapshot,
+  DocumentData,
+  QueryDocumentSnapshot,
+  QuerySnapshot,
+ } from '@firebase/firestore-types';
 
 class Auth {
 
@@ -127,7 +132,7 @@ class Auth {
   }
 
   // TODO: Should live in a /queries file
-  private async getUsersActiveHunt(user: DocumentData): Promise<firebase.firestore.QuerySnapshot> {
+  private async getUsersActiveHunt(user: DocumentData): Promise<QuerySnapshot> {
     const start = new Date('2019-01-01')
     const results = await db.collection('hunts_teams_users')
       .where('userId', '==', user.uid)
