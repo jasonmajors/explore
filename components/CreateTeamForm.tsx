@@ -38,6 +38,7 @@ export class CreateTeamForm extends React.Component<any, any> {
             console.log('starting hunt...')
             // console.log(doc.data())
             // TODO: THIS IS TEMP - Ideally, we just close the modal and continue to team invites and shit
+            // "Team Invite" will really just create a hunts_teams_users record for that user with the team ID
             this.startHunt(huntId, team.id)
           })
       })
