@@ -46,9 +46,11 @@ function SubmitLocation(props: SubmitLocationProps) {
     const proximity: number = Constants.manifest.extra.proximity
     let response: string
     if (distance <= proximity) {
+      // TODO: This currently loads before we know we're on the last node
+      // meaning, this renders, then we realzie we're at the end and launch the
+      // "The end" screen. Kind of lame?
       response = "You did it!"
       updateCurrentNode()
-      // TODO: Need to check if it's the last node somehow and be like "You won"
     } else {
       response = `Not quite! ${distance} meters away`
     }

@@ -38,6 +38,7 @@ export class TeamSetupScreen extends React.Component<any, any> {
   queryUsersTeams(user) {
     // TODO: Change to query hunts_teams_users where userId == user.uid and get all the
     // teamIds. Users will be considered "part of" any team they have a hunts_teams_users record for
+    // Eventually we'll let users lookup other members of the team to invite to hunts
     db.collection('teams').where('leader', "==", user.uid)
       .onSnapshot(querySnapshot => {
         const teams = []

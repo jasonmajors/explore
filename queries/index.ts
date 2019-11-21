@@ -19,7 +19,25 @@ export const incrementHuntNode = async(activeHuntPivotId: string): Promise<void>
   const activeHunt: DocumentReference = await fetchActiveHunt(activeHuntPivotId)
 
   activeHunt.update({
-    currentNode: firebase.firestore.FieldValue.increment(1)
+    currentNode: firebase.firestore.FieldValue.increment(1),
+    currentHint: 0,
+  })
+}
+
+/**
+ * Increments the current hint the active hunt is on
+ *
+ * Note that the hint retrieved will depend on which node the user is on
+ *
+ * @param activeHuntPivotId
+ * @param requiresReset If this is true, we reset back to 0 as to keep cycling the hints *
+ */
+export const incrementHint = async(activeHuntPivotId: string, requiresReset: boolean = false): Promise<void> => {
+  const activeHunt: DocumentReference = await fetchActiveHunt(activeHuntPivotId)
+  const update = requiresReset ? 0 : firebase.firestore.FieldValue.increment(1)
+
+  activeHunt.update({
+    currentHint: update
   })
 }
 
