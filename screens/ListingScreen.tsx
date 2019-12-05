@@ -5,21 +5,24 @@ import { HuntListing } from "../components/HuntListing";
 import { db } from '../services/firebase';
 
 export class ListingScreen extends React.Component<any, any> {
-  static navigationOptions = {
-    title: "Hunts",
-    headerRight: (
-      <Button
-        type="clear"
-        onPress={ () => alert('This is a button!') }
-        icon={
-          <Icon
-            name="menu"
-            size={30}
-            color="white"
-          />
-        }
-      />
-    ),
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: "Hunts",
+      headerRight: (
+        // TODO: Make this a slideout
+        <Button
+          type="clear"
+          onPress={ () => navigation.toggleDrawer() }
+          icon={
+            <Icon
+              name="menu"
+              size={30}
+              color="white"
+            />
+          }
+        />
+      ),
+    }
   }
 
   private huntSub

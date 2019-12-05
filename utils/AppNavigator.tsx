@@ -7,6 +7,7 @@ import { ListingScreen } from "../screens/ListingScreen";
 import { TeamSetupScreen } from "../screens/TeamSetupScreen";
 import  { AuthLoadingScreen } from "../screens/AuthLoadingScreen";
 import HuntCompleted from "../screens/HuntCompleted";
+import { createDrawerNavigator } from "react-navigation";
 
 const AppStack = createStackNavigator(
   {
@@ -41,18 +42,15 @@ const AppStack = createStackNavigator(
   }
 )
 
-const AuthStack = createStackNavigator(
+const AuthStack = createSwitchNavigator(
   {
     Login: {
       screen: LoginScreen
     }
-  },
-  {
-    headerMode: 'none',
   }
 )
 
-export const AppNavigator = createSwitchNavigator(
+const MainNavigator = createSwitchNavigator(
   {
     AuthLoading: {
       screen: AuthLoadingScreen,
@@ -62,5 +60,14 @@ export const AppNavigator = createSwitchNavigator(
   },
   {
     initialRouteName: 'AuthLoading',
+  }
+)
+
+export const AppNavigator = createDrawerNavigator(
+  {
+    Home: MainNavigator,
+  },
+  {
+    initialRouteName: 'Home'
   }
 )
