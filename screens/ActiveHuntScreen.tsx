@@ -6,7 +6,7 @@ import { db } from '../services/firebase';
 import { DocumentReference, DocumentSnapshot } from '@firebase/firestore-types'
 import { Button } from 'react-native-elements';
 import SubmitLocation from '../components/SubmitLocation';
-import { fetchActiveHunt, setHuntFinished, incrementHint } from '../queries';
+import { fetchActiveHunt, setHuntFinished, incrementHint, setRewardOnUser } from '../queries';
 
 export class ActiveHuntScreen extends React.Component<any, any> {
   constructor(props) {
@@ -36,21 +36,32 @@ export class ActiveHuntScreen extends React.Component<any, any> {
    */
   async setCurrentHuntStatus(): Promise<void> {
     const { activeHuntPivotId } = this.context
+    // TODO: Move this into queries as a subscribe query
     const activeHunt: DocumentReference = await fetchActiveHunt(activeHuntPivotId)
     // Subscribe to the current hunt to set node
-    activeHunt.onSnapshot(currentHunt => {
-      const { currentNode, currentHint, huntId } = currentHunt.data()
+    activeHunt.onSnapshot(progress => {
+      const { currentNode, currentHint, huntId } = progress.data()
       db.collection('hunts').doc(huntId)
         .get()
         .then(hunt => {
           if (hunt.exists) {
-            this.setupHuntState(hunt, currentNode, currentHint)
+            this.setupHuntState(hunt, progress, currentNode, currentHint)
           } else {
             console.error("Somehow ended up on the active hunt screen without an active hunt")
             this.props.navigation.replace('Home')
           }
         })
     }, error => console.log(error))
+  }
+
+  fetchReward() {
+    // TODO: Once we can create them via admin screen, fetch them from the API
+    return {
+      // Make up some stuff
+      description: "Buy one get one!",
+      code: "ANOTHERONE",
+      redeemedAt: null
+    }
   }
 
   /**
@@ -60,13 +71,17 @@ export class ActiveHuntScreen extends React.Component<any, any> {
    * @param currentNode
    * @param currentHint
    */
-  setupHuntState(hunt: DocumentSnapshot, currentNode: number, currentHint: number): void {
+  setupHuntState(hunt: DocumentSnapshot, progress: DocumentSnapshot, currentNode: number, currentHint: number): void {
     const { title, nodes } = hunt.data()
     // User has completed the hunt
     if (currentNode === Object.keys(nodes).length) {
-      setHuntFinished(hunt.ref)
-      // TODO: Will need to save their 'reward' somewhere here as well and setup a "your rewards" screen
-      this.props.navigation.replace('Completed', {})
+      setHuntFinished(progress.ref).then(() => {
+        // TODO: Will need to setup a rewards mgmt screen
+        const reward = this.fetchReward()
+        setRewardOnUser(this.context.user, reward)
+
+        this.props.navigation.replace('Completed', { reward })
+      })
     } else {
       this.setCurrentNode(currentNode, currentHint, nodes)
       this.setState({ title, loaded: true })
