@@ -49,10 +49,16 @@ export const incrementHint = async(activeHuntPivotId: string, requiresReset: boo
 export const setHuntFinished = async(activeHunt: DocumentReference): Promise<void> => {
   const activeHuntResult: DocumentSnapshot = await activeHunt.get()
   const { finishedAt } = activeHuntResult.data()
-
-  if (!finishedAt) {
+  if (finishedAt === null) {
     activeHunt.update({
       finishedAt: firebase.firestore.FieldValue.serverTimestamp()
     })
   }
+}
+
+// TODO: Setup User (db user, not default fb user) and Reward types
+export const setRewardOnUser = async(user, reward): Promise<void> => {
+  return await db.collection('users').doc(user.uid).update({
+    rewards: firebase.firestore.FieldValue.arrayUnion(reward)
+  })
 }

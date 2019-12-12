@@ -10,7 +10,7 @@ exports.createUser = Firebase.functions.https.onCall((userRecord, context) => {
 
   return Firebase.db.collection('users')
     .doc(uid)
-    .set({ uid, email, purchasedHunts: [] })
+    .set({ uid, email, purchasedHunts: [], rewards: [] })
     .then(() => {
       return { uid, email, purchasedHunts: [] }
     })

@@ -42,7 +42,7 @@ const AppStack = createStackNavigator(
   }
 )
 
-const AuthStack = createSwitchNavigator(
+const AuthScreens = createSwitchNavigator(
   {
     Login: {
       screen: LoginScreen
@@ -50,13 +50,22 @@ const AuthStack = createSwitchNavigator(
   }
 )
 
+// const RewardStack = createStackNavigator(
+//   {
+//     Rewards: {
+//       screen: ''
+//     }
+//   }
+// )
+
 const MainNavigator = createSwitchNavigator(
   {
     AuthLoading: {
       screen: AuthLoadingScreen,
     },
     App: AppStack,
-    Auth: AuthStack,
+    // Rewards: RewardStack,
+    Auth: AuthScreens,
   },
   {
     initialRouteName: 'AuthLoading',
