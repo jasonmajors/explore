@@ -3,6 +3,7 @@ import { createAppContainer } from "react-navigation";
 import { AppNavigator } from './utils/AppNavigator';
 import { useScreens } from 'react-native-screens';
 import { UserContext } from './context/UserContext';
+import { db } from "./services/firebase";
 
 useScreens();
 
@@ -10,7 +11,9 @@ const AppContainer = createAppContainer(AppNavigator)
 
 export default class App extends React.Component {
   setUser = (user) => {
-    this.setState({ user })
+    // TODO: Move into queris/index
+    db.collection('users').doc(user.uid)
+      .onSnapshot(user => this.setState({ user: user.data() }))
   }
 
   setActiveHuntPivotId = (activeHuntPivotId) => {

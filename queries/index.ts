@@ -6,7 +6,7 @@ import { DocumentReference, DocumentSnapshot } from '@firebase/firestore-types';
  *
  * @param activeHuntPivotId
  */
-export const fetchActiveHunt = async(activeHuntPivotId: string): Promise<firebase.firestore.DocumentReference> => {
+export const fetchActiveHunt = async(activeHuntPivotId: string): Promise<DocumentReference> => {
   return await db.collection('hunts_teams_users').doc(activeHuntPivotId)
 }
 
@@ -56,7 +56,13 @@ export const setHuntFinished = async(activeHunt: DocumentReference): Promise<voi
   }
 }
 
-// TODO: Setup User (db user, not default fb user) and Reward types
+/**
+ * Updates the rewards array on the User with a Reward
+ *
+ * @todo Setup User (db user, not default fb user) and Reward types
+ * @param user
+ * @param reward
+ */
 export const setRewardOnUser = async(user, reward): Promise<void> => {
   return await db.collection('users').doc(user.uid).update({
     rewards: firebase.firestore.FieldValue.arrayUnion(reward)

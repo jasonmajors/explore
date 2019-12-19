@@ -8,6 +8,7 @@ import { TeamSetupScreen } from "../screens/TeamSetupScreen";
 import  { AuthLoadingScreen } from "../screens/AuthLoadingScreen";
 import HuntCompleted from "../screens/HuntCompleted";
 import { createDrawerNavigator } from "react-navigation";
+import RewardScreen from "../screens/RewardsScreen";
 
 const AppStack = createStackNavigator(
   {
@@ -50,13 +51,26 @@ const AuthScreens = createSwitchNavigator(
   }
 )
 
-// const RewardStack = createStackNavigator(
-//   {
-//     Rewards: {
-//       screen: ''
-//     }
-//   }
-// )
+const RewardStack = createStackNavigator(
+  {
+    Rewards: {
+      screen: RewardScreen
+    },
+  },
+  {
+    initialRouteName: "Rewards",
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: '#323232', // TODO: Need some opacity
+        height: 60 // TODO: store in constants somewhere
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+    },
+  }
+)
 
 const MainNavigator = createSwitchNavigator(
   {
@@ -64,7 +78,6 @@ const MainNavigator = createSwitchNavigator(
       screen: AuthLoadingScreen,
     },
     App: AppStack,
-    // Rewards: RewardStack,
     Auth: AuthScreens,
   },
   {
@@ -75,6 +88,7 @@ const MainNavigator = createSwitchNavigator(
 export const AppNavigator = createDrawerNavigator(
   {
     Home: MainNavigator,
+    Rewards: RewardStack,
   },
   {
     initialRouteName: 'Home'
