@@ -1,7 +1,8 @@
 import React, { useState, useContext, useEffect } from "react"
-import { View, Text } from "react-native";
+import { View, Text, SafeAreaView } from "react-native";
 import { UserContext } from "../context/UserContext";
-import { Icon, Button } from "react-native-elements";
+import { Icon, Button, ListItem } from "react-native-elements";
+import Constants from 'expo-constants';
 
 function RewardScreen(props: any) {
   const context = useContext(UserContext)
@@ -12,20 +13,26 @@ function RewardScreen(props: any) {
     setRewards(context.user.rewards)
   })
 
-  const rewardList = []
-
-  rewards.forEach(reward => {
-    rewardList.push(
+  const rewardList = rewards.map((reward, i) => (
       // TODO: Flesh out the display
-      <Text>{ reward.description }</Text>
+      <ListItem
+        key={i}
+        title={ reward.company }
+        subtitle={ reward.description }
+        bottomDivider
+      />
     )
-  })
+  )
 
   return (
-    <View>
-      <Text>Here's your stuff</Text>
-      { rewardList }
-    </View>
+    <SafeAreaView style={{ flex: 1, marginTop: Constants.statusBarHeight }}>
+      <View style={{ flex: 0.15, alignItems: "center", justifyContent: "center" }}>
+        <Text>Here's your stuff</Text>
+      </View>
+      <View>
+        { rewardList }
+      </View>
+    </SafeAreaView>
   )
 }
 

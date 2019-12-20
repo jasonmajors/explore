@@ -59,6 +59,7 @@ export class ActiveHuntScreen extends React.Component<any, any> {
     return {
       // Make up some stuff
       description: "Buy one get one!",
+      company: "Panama Joes",
       code: "ANOTHERONE",
       redeemedAt: null
     }
