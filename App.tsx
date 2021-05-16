@@ -1,10 +1,10 @@
 import React from "react";
 import { createAppContainer } from "react-navigation";
 import { AppNavigator } from './utils/AppNavigator';
-import { useScreens } from 'react-native-screens';
+import { enableScreens } from 'react-native-screens';
 import { UserContext } from './context/UserContext';
 
-useScreens();
+enableScreens();
 
 const AppContainer = createAppContainer(AppNavigator)
 
